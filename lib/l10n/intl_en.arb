@@ -1,0 +1,23 @@
+{
+  "@@locale": "en",
+  "appTitle": "Nahj al-Balagha",
+  "systemLanguage": "System Language",
+  "language": "English",
+  "locale": "en",
+  "noInternetError": "Could not send data because there is no internet connection",
+  "connectionTimeoutError": "Could not connect to the server. Try again.",
+  "sendTimeoutError": "Could not send request in time. Try again.",
+  "receiveTimeoutError": "Server delayed in responding. Try again.",
+  "badCertificateError": "SSL security certificate problem.",
+  "cancelError": "Request was cancelled.",
+  "connectionError": "Could not connect to the server. Check network and try again.",
+  "unknownError": "Connection error occurred. Try again.",
+  "unauthorizedError": "You must log in first.",
+  "forbiddenError": "You do not have permission to perform this operation.",
+  "notFoundError": "Request not found or has been deleted.",
+  "conflictError": "Data conflict occurred.",
+  "unprocessableEntityError": "Input data is incorrect.",
+  "serverError": "An unexpected system error occurred. Please try later.",
+  "defaultError": "An error occurred (Code: {code}).",
+  "socketError": "Could not reach the server. Check network or DNS."
+}

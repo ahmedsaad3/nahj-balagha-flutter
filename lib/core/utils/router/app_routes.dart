@@ -1,0 +1,106 @@
+import 'package:flutter/material.dart';
+
+import 'package:nahj_balagha_flutter/features/auth/presentation/screens/signin_screen.dart';
+import 'package:nahj_balagha_flutter/features/auth/presentation/screens/signup_screen.dart';
+import 'package:nahj_balagha_flutter/features/auth/presentation/screens/welcome_screen.dart';
+import 'package:nahj_balagha_flutter/features/auth/presentation/screens/onboarding_screen.dart';
+import 'package:nahj_balagha_flutter/features/books/domain/entities/book_entity.dart';
+import 'package:nahj_balagha_flutter/features/browse/presentation/screens/browse_screen.dart';
+import 'package:nahj_balagha_flutter/features/favorites/presentation/screens/favorite_screen.dart';
+import 'package:nahj_balagha_flutter/features/home/presentation/screens/home_screen.dart';
+import 'package:nahj_balagha_flutter/features/books/presentation/screens/book_details_screen.dart';
+import 'package:nahj_balagha_flutter/features/scholars/domain/entities/Scholar_entity.dart';
+import 'package:nahj_balagha_flutter/features/scholars/presentation/screens/scholar_details_screen.dart';
+import 'package:nahj_balagha_flutter/features/notifications/presentation/screens/notificationss_screen.dart';
+import 'package:nahj_balagha_flutter/features/profile/presentation/screens/profile_screen.dart';
+import 'package:nahj_balagha_flutter/features/search/presentation/screens/search_screen.dart';
+import 'package:nahj_balagha_flutter/features/settings/presentation/screens/faqs_screen.dart';
+import 'package:nahj_balagha_flutter/features/settings/presentation/screens/settings_screen.dart';
+
+class AppRoutes {
+  static final GlobalKey<NavigatorState> navigatorKey =
+      GlobalKey<NavigatorState>();
+
+  // todo: Auth
+  static const String welcomeScreen = "welcome_screen";
+  static const String onboardingScreen = "onboarding_screen";
+  static const String signupScreen = "signup_screen";
+  static const String signinScreen = "signin_screen";
+
+  // todo: Settings
+  static const String settingsScreen = "settings_screen";
+  static const String faqsScreen = "faqs_screen";
+
+  // todo: Profile
+  static const String profileScreen = "profile_screen";
+
+  // todo: Notifications
+  static const String notificationsScreen = "notifications_screen";
+
+  // todo: Home
+  static const String homeScreen = "home_screen";
+  static const String scholarDetailsScreen = "scholar_details_screen";
+  static const String bookDetailsScreen = "book_details_screen";
+
+  // todo: Search
+  static const String searchScreen = "search_screen";
+
+  // todo: Favorites
+  static const String favoritesScreen = "favorites_screen";
+
+  // todo: Browse
+  static const String browseScreen = "browse_screen";
+
+  static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
+    switch (settings.name) {
+      case welcomeScreen:
+        return MaterialPageRoute(builder: (_) => const WelcomeScreen());
+
+      case onboardingScreen:
+        return MaterialPageRoute(builder: (_) => const OnboardingScreen());
+
+      case scholarDetailsScreen:
+        final scholar = settings.arguments as ScholarEntity;
+        return MaterialPageRoute(builder: (_) => ScholarDetailsScreen(scholar: scholar));
+
+      case bookDetailsScreen:
+        final book = settings.arguments as BookEntity;
+        return MaterialPageRoute(builder: (_) => BookDetailsScreen(book: book));
+
+      case signupScreen:
+        return MaterialPageRoute(builder: (_) => const SignupScreen());
+
+      case signinScreen:
+        return MaterialPageRoute(builder: (_) => const SigninScreen());
+
+      case settingsScreen:
+        return MaterialPageRoute(builder: (_) => const SettingsScreen());
+
+      case faqsScreen:
+        return MaterialPageRoute(builder: (_) => const FAQsScreen());
+
+      case profileScreen:
+        return MaterialPageRoute(builder: (_) => const ProfileScreen());
+
+      case notificationsScreen:
+        return MaterialPageRoute(builder: (_) => const NotificationsScreen());
+
+      case homeScreen:
+        return MaterialPageRoute(builder: (_) => const HomeScreen());
+
+      case searchScreen:
+        return MaterialPageRoute(builder: (_) => const SearchScreen());
+
+      case favoritesScreen:
+        return MaterialPageRoute(builder: (_) => const FavoritesScreen());
+
+      case browseScreen:
+        return MaterialPageRoute(builder: (_) => const BrowseScreen());
+    }
+
+    return MaterialPageRoute(
+      builder: (_) =>
+          const Scaffold(body: Center(child: Text('Route not found'))),
+    );
+  }
+}

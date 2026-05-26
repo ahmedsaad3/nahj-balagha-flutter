@@ -1,0 +1,23 @@
+{
+  "@@locale": "ar",
+  "appTitle": "نهج البلاغة",
+  "systemLanguage": "لغة النظام",
+  "language": "العربية",
+  "locale": "ar_IQ",
+  "noInternetError": "تعذر إرسال البيانات بسبب عدم وجود اتصال بالإنترنت",
+  "connectionTimeoutError": "تعذر الاتصال بالخادم. حاول مرة أخرى.",
+  "sendTimeoutError": "تعذر إرسال الطلب بالوقت المحدد. حاول مرة أخرى.",
+  "receiveTimeoutError": "الخادم تأخر بالرد. حاول مرة أخرى.",
+  "badCertificateError": "مشكلة في شهادة الأمان (SSL).",
+  "cancelError": "تم إلغاء الطلب.",
+  "connectionError": "تعذر الاتصال بالخادم. تحقق من الشبكة وحاول مجددًا.",
+  "unknownError": "حدث خطأ في الاتصال. حاول مرة أخرى.",
+  "unauthorizedError": "يجب تسجيل الدخول أولاً.",
+  "forbiddenError": "ليس لديك صلاحية لتنفيذ هذه العملية.",
+  "notFoundError": "الطلب غير موجود أو تم حذفه.",
+  "conflictError": "يوجد تعارض بالبيانات.",
+  "unprocessableEntityError": "البيانات المدخلة غير صحيحة.",
+  "serverError": "حدث خطأ غير متوقع في النظام. يرجى المحاولة لاحقًا.",
+  "defaultError": "حدث خطأ (Code: {code}).",
+  "socketError": "تعذر الوصول إلى الخادم. تحقق من الشبكة أو DNS."
+}
