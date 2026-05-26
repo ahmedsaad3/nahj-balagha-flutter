@@ -5,14 +5,12 @@ import 'package:nahj_balagha_flutter/features/scholars/domain/entities/Scholar_e
 
 class HomeData extends Equatable {
   final WisdomEntity wisdomOfTheDay;
-  final List<BookEntity> books;
   final List<BookEntity> foreignStudies;
   final List<BookEntity> articles;
   final List<ScholarEntity> scholars;
 
   const HomeData({
     required this.wisdomOfTheDay,
-    required this.books,
     required this.foreignStudies,
     required this.articles,
     required this.scholars,
@@ -21,7 +19,6 @@ class HomeData extends Equatable {
   @override
   List<Object?> get props => [
     wisdomOfTheDay,
-    books,
     foreignStudies,
     articles,
     scholars,

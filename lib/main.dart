@@ -15,6 +15,8 @@ import 'package:nahj_balagha_flutter/features/auth/presentation/screens/onboardi
 import 'package:nahj_balagha_flutter/features/search/presentation/controller/search_cubit.dart';
 import 'package:nahj_balagha_flutter/features/settings/presentation/controller/settings_cubit/settings_cubit.dart';
 import 'package:nahj_balagha_flutter/features/settings/presentation/controller/settings_cubit/settings_state.dart';
+import 'package:nahj_balagha_flutter/features/books/presentation/controller/book_cubit.dart';
+import 'package:nahj_balagha_flutter/features/scholars/presentation/controller/scholar_cubit.dart';
 import 'package:nahj_balagha_flutter/firebase/firebase_notification_service.dart';
 import 'package:nahj_balagha_flutter/l10n/app_localizations.dart';
 import 'package:nahj_balagha_flutter/l10n/l10n.dart';
@@ -45,6 +47,8 @@ void main() async {
           ),
           BlocProvider<SearchCubit>(create: (context) => sl<SearchCubit>()),
           BlocProvider<HomeCubit>(create: (context) => sl<HomeCubit>()),
+          BlocProvider<BookCubit>(create: (context) => sl<BookCubit>()),
+          BlocProvider<ScholarCubit>(create: (context) => sl<ScholarCubit>()),
           BlocProvider<ConnectivityCubit>(
             create: (context) => sl<ConnectivityCubit>(),
           ),

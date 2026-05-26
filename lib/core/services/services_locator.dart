@@ -36,9 +36,26 @@ import 'package:nahj_balagha_flutter/features/search/presentation/controller/sea
 import 'package:nahj_balagha_flutter/firebase/firebase_notification_service.dart';
 import 'package:nahj_balagha_flutter/shared/cubit/connectivity/connectivity_cubit.dart';
 import 'package:nahj_balagha_flutter/features/home/data/repository/home_repository_impl.dart';
+import 'package:nahj_balagha_flutter/features/home/data/datasource/base_home_remote_data_source.dart';
+import 'package:nahj_balagha_flutter/features/home/data/datasource/home_remote_data_source.dart';
 import 'package:nahj_balagha_flutter/features/home/domain/repository/base_home_repository.dart';
 import 'package:nahj_balagha_flutter/features/home/domain/usecases/get_home_data_usecase.dart';
 import 'package:nahj_balagha_flutter/features/home/presentation/controller/home_cubit.dart';
+
+import 'package:nahj_balagha_flutter/features/books/data/datasource/base_book_remote_data_source.dart';
+import 'package:nahj_balagha_flutter/features/books/data/datasource/book_remote_data_source.dart';
+import 'package:nahj_balagha_flutter/features/books/data/repository/book_repository.dart';
+import 'package:nahj_balagha_flutter/features/books/domain/repository/base_book_repository.dart';
+import 'package:nahj_balagha_flutter/features/books/domain/usecases/get_articles_usecases.dart';
+import 'package:nahj_balagha_flutter/features/books/domain/usecases/get_foreign_studies_usecases.dart';
+import 'package:nahj_balagha_flutter/features/books/presentation/controller/book_cubit.dart';
+
+import 'package:nahj_balagha_flutter/features/scholars/data/datasource/base_scholar_remote_data_source.dart';
+import 'package:nahj_balagha_flutter/features/scholars/data/datasource/scholar_remote_data_source.dart';
+import 'package:nahj_balagha_flutter/features/scholars/data/repository/scholar_repository.dart';
+import 'package:nahj_balagha_flutter/features/scholars/domain/repository/base_scholar_repository.dart';
+import 'package:nahj_balagha_flutter/features/scholars/domain/usecases/get_scholars_usecase.dart';
+import 'package:nahj_balagha_flutter/features/scholars/presentation/controller/scholar_cubit.dart';
 
 
 final sl = GetIt.instance;
@@ -93,9 +110,19 @@ class ServicesLocator {
       () => ProfileRemoteDataSource(client: sl<DioClient>()),
     );
 
-    // Home Mock Data Source
-    sl.registerLazySingleton<HomeMockDataSource>(
-      () => HomeMockDataSource(),
+    // Home Remote Data Source
+    sl.registerLazySingleton<BaseHomeRemoteDataSource>(
+      () => HomeRemoteDataSource(client: sl<DioClient>()),
+    );
+
+    // Book Remote Data Source
+    sl.registerLazySingleton<BaseBookRemoteDataSource>(
+      () => BookRemoteDataSource(client: sl<DioClient>()),
+    );
+
+    // Scholar Remote Data Source
+    sl.registerLazySingleton<BaseScholarRemoteDataSource>(
+      () => ScholarRemoteDataSource(client: sl<DioClient>()),
     );
 
 
@@ -129,7 +156,21 @@ class ServicesLocator {
 
     // Home Repository
     sl.registerLazySingleton<BaseHomeRepository>(
-      () => HomeRepositoryImpl(homeMockDataSource: sl()),
+      () => HomeRepositoryImpl(
+        homeRemoteDataSource: sl(),
+        bookRemoteDataSource: sl(),
+        scholarRemoteDataSource: sl(),
+      ),
+    );
+
+    // Book Repository
+    sl.registerLazySingleton<BaseBookRepository>(
+      () => BookRepository(baseBookRemoteDataSource: sl()),
+    );
+
+    // Scholar Repository
+    sl.registerLazySingleton<BaseScholarRepository>(
+      () => ScholarRepository(baseScholarRemoteDataSource: sl()),
     );
 
 
@@ -175,6 +216,19 @@ class ServicesLocator {
     // Home Use Case
     sl.registerLazySingleton<GetHomeDataUseCase>(
       () => GetHomeDataUseCase(baseHomeRepository: sl()),
+    );
+
+    // Book Use Cases
+    sl.registerLazySingleton<GetArticlesUseCases>(
+      () => GetArticlesUseCases(baseBookRepository: sl()),
+    );
+    sl.registerLazySingleton<GetForeignStudiesUseCases>(
+      () => GetForeignStudiesUseCases(baseBookRepository: sl()),
+    );
+
+    // Scholar Use Case
+    sl.registerLazySingleton<GetScholarsUseCase>(
+      () => GetScholarsUseCase(baseScholarRepository: sl()),
     );
 
 
@@ -234,6 +288,19 @@ class ServicesLocator {
     // Home Cubit
     sl.registerFactory<HomeCubit>(
       () => HomeCubit(getHomeDataUseCase: sl()),
+    );
+
+    // Book Cubit
+    sl.registerFactory<BookCubit>(
+      () => BookCubit(
+        getArticlesUseCases: sl(),
+        getForeignStudiesUseCases: sl(),
+      ),
+    );
+
+    // Scholar Cubit
+    sl.registerFactory<ScholarCubit>(
+      () => ScholarCubit(sl()),
     );
 
 
