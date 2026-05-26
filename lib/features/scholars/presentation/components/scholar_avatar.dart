@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nahj_balagha_flutter/core/utils/theme/app_color/app_colors_light.dart';
-import 'package:nahj_balagha_flutter/features/scholars/domain/entities/Scholar_entity.dart';
+import 'package:nahj_balagha_flutter/features/scholars/domain/entities/scholar_entity.dart';
 import 'package:nahj_balagha_flutter/shared/components/text_widget.dart';
 
 class ScholarAvatar extends StatelessWidget {

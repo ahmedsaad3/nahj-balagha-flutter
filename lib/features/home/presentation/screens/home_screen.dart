@@ -6,7 +6,7 @@ import 'package:nahj_balagha_flutter/core/utils/router/app_routes.dart';
 import 'package:nahj_balagha_flutter/core/utils/theme/app_color/app_colors_light.dart';
 import 'package:nahj_balagha_flutter/features/books/domain/entities/book_entity.dart';
 import 'package:nahj_balagha_flutter/features/books/presentation/components/book_item_card.dart';
-import 'package:nahj_balagha_flutter/features/scholars/domain/entities/Scholar_entity.dart';
+import 'package:nahj_balagha_flutter/features/scholars/domain/entities/scholar_entity.dart';
 import 'package:nahj_balagha_flutter/features/scholars/presentation/components/scholar_avatar.dart';
 import 'package:nahj_balagha_flutter/features/home/presentation/components/wisdom_card.dart';
 import 'package:nahj_balagha_flutter/features/home/presentation/controller/home_cubit.dart';

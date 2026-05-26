@@ -3,7 +3,7 @@ import 'package:nahj_balagha_flutter/core/utils/constant.dart';
 import 'package:nahj_balagha_flutter/core/utils/router/app_routes.dart';
 import 'package:nahj_balagha_flutter/core/utils/theme/app_color/app_colors_light.dart';
 import 'package:nahj_balagha_flutter/features/books/presentation/components/book_item_card.dart';
-import 'package:nahj_balagha_flutter/features/scholars/domain/entities/Scholar_entity.dart';
+import 'package:nahj_balagha_flutter/features/scholars/domain/entities/scholar_entity.dart';
 import 'package:nahj_balagha_flutter/shared/components/text_widget.dart';
 
 class ScholarDetailsScreen extends StatelessWidget {

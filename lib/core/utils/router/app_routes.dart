@@ -9,7 +9,7 @@ import 'package:nahj_balagha_flutter/features/browse/presentation/screens/browse
 import 'package:nahj_balagha_flutter/features/favorites/presentation/screens/favorite_screen.dart';
 import 'package:nahj_balagha_flutter/features/home/presentation/screens/home_screen.dart';
 import 'package:nahj_balagha_flutter/features/books/presentation/screens/book_details_screen.dart';
-import 'package:nahj_balagha_flutter/features/scholars/domain/entities/Scholar_entity.dart';
+import 'package:nahj_balagha_flutter/features/scholars/domain/entities/scholar_entity.dart';
 import 'package:nahj_balagha_flutter/features/scholars/presentation/screens/scholar_details_screen.dart';
 import 'package:nahj_balagha_flutter/features/notifications/presentation/screens/notificationss_screen.dart';
 import 'package:nahj_balagha_flutter/features/profile/presentation/screens/profile_screen.dart';
