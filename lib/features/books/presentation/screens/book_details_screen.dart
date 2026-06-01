@@ -1,34 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:nahj_balagha_flutter/core/utils/constant.dart';
 import 'package:nahj_balagha_flutter/core/utils/theme/app_color/app_colors_light.dart';
+import 'package:nahj_balagha_flutter/core/utils/ui_utils.dart';
 import 'package:nahj_balagha_flutter/features/books/domain/entities/book_entity.dart';
+import 'package:nahj_balagha_flutter/shared/components/elevated_button_widget.dart';
 import 'package:nahj_balagha_flutter/shared/components/text_widget.dart';
 
 class BookDetailsScreen extends StatelessWidget {
   final BookEntity book;
 
-  const BookDetailsScreen({
-    super.key,
-    required this.book,
-  });
+  const BookDetailsScreen({super.key, required this.book});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColorsLight.primary,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.white),
-          onPressed: () => Navigator.pop(context),
-        ),
-        centerTitle: true,
-        title: const TextWidget(
-          title: "تفاصيل الكتاب",
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
-          color: Colors.white,
-        ),
-      ),
+      appBar: UiUtils.appBar(context: context, centerTitle: true),
+
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(HORIZONTAL),
         child: Column(
@@ -56,76 +43,83 @@ class BookDetailsScreen extends StatelessWidget {
                       ? Image.network(
                           book.coverImage,
                           fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) => Container(
-                            color: AppColorsLight.grayLight,
-                            child: const Icon(
-                              Icons.book,
-                              color: AppColorsLight.primary,
-                              size: 80,
-                            ),
-                          ),
+                          errorBuilder: (context, error, stackTrace) =>
+                              Container(
+                                color: AppColorsLight.grayLight,
+                                child: const Icon(
+                                  Icons.book,
+                                  color: AppColorsLight.primary,
+                                  size: 80,
+                                ),
+                              ),
                         )
                       : Image.asset(
                           book.coverImage,
                           fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) => Container(
-                            color: AppColorsLight.grayLight,
-                            child: const Icon(
-                              Icons.book,
-                              color: AppColorsLight.primary,
-                              size: 80,
-                            ),
-                          ),
+                          errorBuilder: (context, error, stackTrace) =>
+                              Container(
+                                color: AppColorsLight.grayLight,
+                                child: const Icon(
+                                  Icons.book,
+                                  color: AppColorsLight.primary,
+                                  size: 80,
+                                ),
+                              ),
                         ),
                 ),
               ),
             ),
-    
+
             const SizedBox(height: 24),
-    
+
             // Title
             TextWidget(
               title: book.title,
-              fontSize: 20,
+              fontSize: 16,
               fontWeight: FontWeight.bold,
-              color: AppColorsLight.textPrimary,
               alignment: TextAlign.center,
             ),
-    
+
             const SizedBox(height: 8),
-    
+
             // Author
             TextWidget(
               title: book.author,
-              fontSize: 14,
-              color: AppColorsLight.secondary,
-              fontWeight: FontWeight.bold,
+              fontSize: 16,
               alignment: TextAlign.center,
             ),
-    
-            const SizedBox(height: 20),
-            const Divider(color: AppColorsLight.grayLight),
-            const SizedBox(height: 16),
-    
+
+            const SizedBox(height: 30),
+
             // Description Heading
             const TextWidget(
-              title: "نبذة عن الكتاب:",
-              fontSize: 15,
-              fontWeight: FontWeight.bold,
-              color: AppColorsLight.primary,
+              title: "التفاصيل",
+              fontSize: 16,
+              color: AppColorsLight.accent,
             ),
-    
+
             const SizedBox(height: 8),
-    
+
             // Description Text
             TextWidget(
               title: book.description,
-              fontSize: 13,
+              fontSize: 16,
               height: 1.8,
               color: AppColorsLight.textPrimary,
               alignment: TextAlign.justify,
             ),
           ],
+        ),
+      ),
+
+      bottomNavigationBar: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: HORIZONTAL),
+          child: ElevatedButtonWidget(
+            backgroundColor: AppColorsLight.primary,
+            onPressed: () {},
+            title: "تحميل الكتاب",
+          ),
         ),
       ),
     );

@@ -1,4 +1,4 @@
-import 'package:nahj_balagha_flutter/features/auth/domain/entities/user.dart';
+import 'package:nahj_balagha_flutter/features/auth/data/domain/entities/user.dart';
 
 class UserModel extends User {
   const UserModel({

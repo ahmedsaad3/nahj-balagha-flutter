@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:nahj_balagha_flutter/core/utils/constant.dart';
+import 'package:nahj_balagha_flutter/core/utils/images.dart';
+import 'package:nahj_balagha_flutter/core/utils/router/app_routes.dart';
 import 'package:nahj_balagha_flutter/core/utils/theme/app_color/app_colors_light.dart';
-import 'package:nahj_balagha_flutter/features/navigation/presentation/screen/navigation_screen.dart';
+import 'package:nahj_balagha_flutter/shared/components/app_image_widget.dart';
+import 'package:nahj_balagha_flutter/shared/components/elevated_button_widget.dart';
+import 'package:nahj_balagha_flutter/shared/components/soft_divider_widget.dart.dart';
 import 'package:nahj_balagha_flutter/shared/components/text_widget.dart';
 
 class OnboardingScreen extends StatelessWidget {
@@ -13,7 +17,10 @@ class OnboardingScreen extends StatelessWidget {
       backgroundColor: AppColorsLight.primary,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: HORIZONTAL, vertical: 20),
+          padding: const EdgeInsets.symmetric(
+            horizontal: HORIZONTAL,
+            vertical: 20,
+          ),
           child: Column(
             children: [
               const Spacer(flex: 2),
@@ -82,30 +89,21 @@ class OnboardingScreen extends StatelessWidget {
                 ],
               ),
 
-              const SizedBox(height: 40),
-
               // Calligraphy Title
-              const TextWidget(
-                title: "مَعَارِفُ نَهْجِ الْبَلَاغَةِ",
-                fontSize: 26,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-                alignment: TextAlign.center,
+              AppImageWidget(
+                path: AppAssets().nahjAlbalaghaManuscript,
+                scale: 2,
+                padding: const EdgeInsets.symmetric(vertical: 50),
               ),
 
-              const SizedBox(height: 30),
-
               // Bio Description Text
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                child: TextWidget(
-                  title:
-                      "أهلاً بكم في التطبيق الجامع لعلوم نهج البلاغة، برعاية الأمانة العامة للعتبة العلوية المقدسة. رحلة إيمانية تبحر في أعماق الكلم الشريف، تجمع لك النفحات الصوتية، والحكم في واجهة تقنية عصرية.",
-                  fontSize: 14,
-                  height: 1.8,
-                  color: Colors.white,
-                  alignment: TextAlign.center,
-                ),
+              TextWidget(
+                title:
+                    "أهلاً بكم في التطبيق الجامع لعلوم نهج البلاغة، برعاية الأمانة العامة للعتبة العلوية المقدسة. رحلة إيمانية تبحر في أعماق الكلم الشريف، تجمع لك النفحات الصوتية، والحكم في واجهة تقنية عصرية.",
+                fontSize: 14,
+                height: 1.8,
+                color: Colors.white,
+                alignment: TextAlign.center,
               ),
 
               const Spacer(flex: 2),
@@ -113,71 +111,34 @@ class OnboardingScreen extends StatelessWidget {
               // Bottom Partners Logos
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
+                spacing: 30,
                 children: [
-                  Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(color: Colors.white.withAlpha(180), width: 1.5),
-                    ),
-                    child: const Icon(
-                      Icons.menu_book_outlined,
-                      color: Colors.white,
-                      size: 28,
-                    ),
+                  AppImageWidget(path: AppAssets().imamAliLogo, scale: 2),
+                  const SoftDividerWidget(
+                    axis: Axis.vertical,
+                    color: AppColorsLight.white,
+                    enableGradient: false,
+                    length: 60,
                   ),
-                  const SizedBox(width: 20),
-                  Container(
-                    height: 40,
-                    width: 1.5,
-                    color: Colors.white.withAlpha(120),
-                  ),
-                  const SizedBox(width: 20),
-                  Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(color: Colors.white.withAlpha(180), width: 1.5),
-                    ),
-                    child: const Icon(
-                      Icons.account_balance_outlined,
-                      color: Colors.white,
-                      size: 28,
-                    ),
+                  AppImageWidget(
+                    path: AppAssets().haydaryaLibraryLogo,
+                    scale: 2,
                   ),
                 ],
               ),
 
               const Spacer(flex: 1),
-
-              // Enter Button
-              SizedBox(
-                width: double.infinity,
-                height: 52,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    foregroundColor: AppColorsLight.primary,
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  onPressed: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const NavigationScreen(),
-                      ),
-                    );
-                  },
-                  child: const TextWidget(
-                    title: "الدخول للتطبيق",
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: AppColorsLight.textPrimary,
-                  ),
-                ),
+              ElevatedButtonWidget(
+                onPressed: () {
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    AppRoutes.navigationScreen,
+                    (route) => false,
+                  );
+                },
+                title: "الدخول للتطبيق",
+                backgroundColor: AppColorsLight.white,
+                textColor: AppColorsLight.black,
               ),
 
               const SizedBox(height: PADDING_BOTTOM),

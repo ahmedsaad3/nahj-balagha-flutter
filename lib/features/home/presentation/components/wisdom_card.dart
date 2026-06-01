@@ -25,7 +25,7 @@ class _WisdomCardState extends State<WisdomCard> {
     showModalBottomSheet(
       context: context,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(RADIUS_CHAT)),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(RADIUS)),
       ),
       builder: (context) {
         return SafeArea(
@@ -107,7 +107,7 @@ class _WisdomCardState extends State<WisdomCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(18),
+      padding: const EdgeInsets.all(PADDING_BOTTOM),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(RADIUS),

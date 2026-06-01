@@ -11,6 +11,11 @@ mixin AppSvg {
   final String homeSolidIcon = 'assets/svg/home-solid-icon.svg';
   final String searchSolidIcon = 'assets/svg/search-solid-icon.svg';
   final String wisdomManuscript = 'assets/svg/wisdom-manuscript.svg';
+  final String nahjAlbalaghaManuscript =
+      'assets/svg/nahj-albalagha-manuscript.svg';
+  final String imamAliLogo = 'assets/svg/imam-ali-logo.svg';
+  final String haydaryaLibraryLogo = 'assets/svg/haydarya-library-logo.svg';
+  final String commaAyat = 'assets/svg/comma-ayat.svg';
 }
 mixin AppJson {
   final String _jsonRout = 'assets/json';

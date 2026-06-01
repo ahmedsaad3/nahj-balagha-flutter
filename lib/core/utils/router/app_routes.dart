@@ -9,6 +9,7 @@ import 'package:nahj_balagha_flutter/features/browse/presentation/screens/browse
 import 'package:nahj_balagha_flutter/features/favorites/presentation/screens/favorite_screen.dart';
 import 'package:nahj_balagha_flutter/features/home/presentation/screens/home_screen.dart';
 import 'package:nahj_balagha_flutter/features/books/presentation/screens/book_details_screen.dart';
+import 'package:nahj_balagha_flutter/features/navigation/presentation/screen/navigation_screen.dart';
 import 'package:nahj_balagha_flutter/features/scholars/domain/entities/scholar_entity.dart';
 import 'package:nahj_balagha_flutter/features/scholars/presentation/screens/scholar_details_screen.dart';
 import 'package:nahj_balagha_flutter/features/notifications/presentation/screens/notificationss_screen.dart';
@@ -16,10 +17,16 @@ import 'package:nahj_balagha_flutter/features/profile/presentation/screens/profi
 import 'package:nahj_balagha_flutter/features/search/presentation/screens/search_screen.dart';
 import 'package:nahj_balagha_flutter/features/settings/presentation/screens/faqs_screen.dart';
 import 'package:nahj_balagha_flutter/features/settings/presentation/screens/settings_screen.dart';
+import 'package:nahj_balagha_flutter/features/browse/domain/entities/browse_node.dart';
+import 'package:nahj_balagha_flutter/features/browse/presentation/screens/category_screen.dart';
+import 'package:nahj_balagha_flutter/features/content/presentation/screens/content_reader_screen.dart';
 
 class AppRoutes {
   static final GlobalKey<NavigatorState> navigatorKey =
       GlobalKey<NavigatorState>();
+
+  // todo: Navigation
+  static const String navigationScreen = "navigation_screen";
 
   // todo: Auth
   static const String welcomeScreen = "welcome_screen";
@@ -50,9 +57,14 @@ class AppRoutes {
 
   // todo: Browse
   static const String browseScreen = "browse_screen";
+  static const String categoryScreen = "category_screen";
+  static const String contentReaderScreen = "content_reader_screen";
 
   static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
+      case navigationScreen:
+        return MaterialPageRoute(builder: (_) => const NavigationScreen());
+
       case welcomeScreen:
         return MaterialPageRoute(builder: (_) => const WelcomeScreen());
 
@@ -61,7 +73,9 @@ class AppRoutes {
 
       case scholarDetailsScreen:
         final scholar = settings.arguments as ScholarEntity;
-        return MaterialPageRoute(builder: (_) => ScholarDetailsScreen(scholar: scholar));
+        return MaterialPageRoute(
+          builder: (_) => ScholarDetailsScreen(scholar: scholar),
+        );
 
       case bookDetailsScreen:
         final book = settings.arguments as BookEntity;
@@ -96,8 +110,29 @@ class AppRoutes {
 
       case browseScreen:
         return MaterialPageRoute(builder: (_) => const BrowseScreen());
-    }
 
+      case categoryScreen:
+        final path = settings.arguments as List<BrowseNode>;
+        return MaterialPageRoute(builder: (_) => CategoryScreen(trail: path));
+
+      case contentReaderScreen:
+        if (settings.arguments is Map<String, dynamic>) {
+          final args = settings.arguments as Map<String, dynamic>;
+          final contentId = args['contentId'] as String;
+          final trail = args['trail'] as List<BrowseNode>;
+          return MaterialPageRoute(
+            builder: (_) => ContentReaderScreen(
+              contentId: contentId,
+              trail: trail,
+            ),
+          );
+        } else {
+          final contentId = settings.arguments as String;
+          return MaterialPageRoute(
+            builder: (_) => ContentReaderScreen(contentId: contentId),
+          );
+        }
+    }
     return MaterialPageRoute(
       builder: (_) =>
           const Scaffold(body: Center(child: Text('Route not found'))),

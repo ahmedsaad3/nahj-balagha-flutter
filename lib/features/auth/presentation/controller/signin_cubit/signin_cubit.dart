@@ -8,7 +8,7 @@ import 'package:nahj_balagha_flutter/core/services/cache_helper.dart';
 import 'package:nahj_balagha_flutter/core/utils/constant.dart';
 import 'package:nahj_balagha_flutter/core/utils/enums.dart';
 import 'package:nahj_balagha_flutter/features/auth/data/repository/token_repository.dart';
-import 'package:nahj_balagha_flutter/features/auth/domain/usecases/signin_usecase.dart';
+import 'package:nahj_balagha_flutter/features/auth/data/domain/usecases/signin_usecase.dart';
 import 'package:nahj_balagha_flutter/features/auth/presentation/controller/signin_cubit/signin_state.dart';
 import 'package:nahj_balagha_flutter/firebase/firebase_notification_service.dart';
 

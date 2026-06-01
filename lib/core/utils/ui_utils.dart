@@ -5,8 +5,11 @@ import 'package:nahj_balagha_flutter/core/services/multi_item_model.dart';
 import 'package:nahj_balagha_flutter/core/utils/constant.dart';
 import 'package:nahj_balagha_flutter/core/utils/theme/app_color/app_colors_light.dart';
 import 'package:nahj_balagha_flutter/extensions/context_extensions.dart';
+import 'package:nahj_balagha_flutter/shared/components/app_image_widget.dart';
 import 'package:nahj_balagha_flutter/shared/components/text_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import 'images.dart';
 
 class UiUtils {
   static String formatDate({
@@ -46,7 +49,7 @@ class UiUtils {
     Color? backIconColor = AppColorsLight.white,
     PreferredSizeWidget? bottom,
     EdgeInsets? actionsPadding = EdgeInsets.zero,
-    bool centerTitle = false,
+    bool centerTitle = true,
     double? titleSpacing,
   }) {
     return AppBar(
@@ -58,7 +61,10 @@ class UiUtils {
             icon: Icon(Icons.arrow_back_rounded, color: backIconColor),
           ),
       titleSpacing: titleSpacing,
-      title: titleWidget ?? TextWidget(title: title ?? "", fontSize: 16),
+      title:
+          titleWidget ??
+          AppImageWidget(path: AppAssets().nahjAlbalaghaManuscript, scale: 1.8),
+      // title: titleWidget ?? TextWidget(title: title ?? "", fontSize: 16),
       actionsPadding: actionsPadding,
       actions: [action ?? const SizedBox.shrink()],
       bottom: bottom,

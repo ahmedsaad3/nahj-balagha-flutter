@@ -5,7 +5,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:nahj_balagha_flutter/core/utils/constant.dart';
 import 'package:nahj_balagha_flutter/features/auth/data/models/user_model.dart';
-import 'package:nahj_balagha_flutter/features/auth/domain/repository/base_token_repository.dart';
+import 'package:nahj_balagha_flutter/features/auth/data/domain/repository/base_token_repository.dart';
 
 class TokenRepository implements BaseTokenRepository {
   String? _token;

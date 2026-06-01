@@ -8,7 +8,7 @@ import 'package:nahj_balagha_flutter/core/usecase/base_usecase.dart';
 import 'package:nahj_balagha_flutter/core/utils/enums.dart';
 import 'package:nahj_balagha_flutter/features/auth/data/models/user_model.dart';
 import 'package:nahj_balagha_flutter/features/auth/data/repository/token_repository.dart';
-import 'package:nahj_balagha_flutter/features/auth/domain/usecases/update_usecase.dart';
+import 'package:nahj_balagha_flutter/features/auth/data/domain/usecases/update_usecase.dart';
 import 'package:nahj_balagha_flutter/features/auth/presentation/controller/update_profile_cubit/update_profile_state.dart';
 
 class UpdateProfileCubit extends Cubit<UpdateProfileState> {

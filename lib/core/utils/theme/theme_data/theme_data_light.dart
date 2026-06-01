@@ -91,7 +91,7 @@ ThemeData getThemDataLight() => ThemeData(
     backgroundColor: AppColorsLight.white,
     type: BottomNavigationBarType.fixed,
     landscapeLayout: BottomNavigationBarLandscapeLayout.spread,
-    selectedItemColor: AppColorsLight.primary,
+    selectedItemColor: AppColorsLight.secondary,
     unselectedItemColor: AppColorsLight.gray,
     showSelectedLabels: true,
     showUnselectedLabels: true,

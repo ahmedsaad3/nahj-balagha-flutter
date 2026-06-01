@@ -5,11 +5,11 @@ import 'package:nahj_balagha_flutter/features/auth/data/datasource/auth_remote_d
 import 'package:nahj_balagha_flutter/features/auth/data/datasource/base_auth_remote_data_source.dart';
 import 'package:nahj_balagha_flutter/features/auth/data/repository/auth_repository.dart';
 import 'package:nahj_balagha_flutter/features/auth/data/repository/token_repository.dart';
-import 'package:nahj_balagha_flutter/features/auth/domain/repository/base_auth_repository.dart';
-import 'package:nahj_balagha_flutter/features/auth/domain/repository/base_token_repository.dart';
-import 'package:nahj_balagha_flutter/features/auth/domain/usecases/signin_usecase.dart';
-import 'package:nahj_balagha_flutter/features/auth/domain/usecases/signup_usecase.dart';
-import 'package:nahj_balagha_flutter/features/auth/domain/usecases/update_usecase.dart';
+import 'package:nahj_balagha_flutter/features/auth/data/domain/repository/base_auth_repository.dart';
+import 'package:nahj_balagha_flutter/features/auth/data/domain/repository/base_token_repository.dart';
+import 'package:nahj_balagha_flutter/features/auth/data/domain/usecases/signin_usecase.dart';
+import 'package:nahj_balagha_flutter/features/auth/data/domain/usecases/signup_usecase.dart';
+import 'package:nahj_balagha_flutter/features/auth/data/domain/usecases/update_usecase.dart';
 import 'package:nahj_balagha_flutter/features/auth/presentation/controller/auth_cubit/auth_cubit.dart';
 import 'package:nahj_balagha_flutter/features/auth/presentation/controller/signin_cubit/signin_cubit.dart';
 import 'package:nahj_balagha_flutter/features/auth/presentation/controller/signup_cubit/signup_cubit.dart';
@@ -56,6 +56,8 @@ import 'package:nahj_balagha_flutter/features/scholars/data/repository/scholar_r
 import 'package:nahj_balagha_flutter/features/scholars/domain/repository/base_scholar_repository.dart';
 import 'package:nahj_balagha_flutter/features/scholars/domain/usecases/get_scholars_usecase.dart';
 import 'package:nahj_balagha_flutter/features/scholars/presentation/controller/scholar_cubit.dart';
+import 'package:nahj_balagha_flutter/features/browse/presentation/controller/browse_cubit.dart';
+import 'package:nahj_balagha_flutter/features/content/presentation/controller/content_cubit.dart';
 
 
 final sl = GetIt.instance;
@@ -302,6 +304,12 @@ class ServicesLocator {
     sl.registerFactory<ScholarCubit>(
       () => ScholarCubit(sl()),
     );
+
+    // Browse Cubit
+    sl.registerFactory<BrowseCubit>(() => BrowseCubit());
+
+    // Content Cubit
+    sl.registerFactory<ContentCubit>(() => ContentCubit());
 
 
     // Connectivity Cubit (Singleton for app-wide connectivity state)
