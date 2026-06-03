@@ -1,7 +1,5 @@
 import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nahj_balagha_flutter/core/services/cache_helper.dart';
-import 'package:nahj_balagha_flutter/core/utils/constant.dart';
 import 'package:nahj_balagha_flutter/core/utils/enums.dart';
 import 'package:nahj_balagha_flutter/core/utils/router/app_routes.dart';
 import 'package:nahj_balagha_flutter/features/auth/data/models/user_model.dart';
@@ -16,43 +14,9 @@ class AuthCubit extends Cubit<AuthState> {
 
   UserModel? _user;
 
-  Future<bool> _checkGuestStatus() async {
-    try {
-      return CacheHelper.getBoolean(key: IS_GUEST_KEY) ?? false;
-    } catch (_) {
-      return false;
-    }
-  }
-
-  Future<void> setGuestStatus(bool isGuest) async {
-    try {
-      await CacheHelper.setBoolean(key: IS_GUEST_KEY, value: isGuest);
-      emit(
-        state.copyWith(
-          isGuest: isGuest,
-          initialRoute: AppRoutes.welcomeScreen,
-          authCheckState: RequestState.loaded,
-        ),
-      );
-    } catch (e) {
-      print('Error setting guest status: $e');
-    }
-  }
 
   Future<void> checkAuthenticationStatus() async {
     emit(state.copyWith(authCheckState: RequestState.loading));
-
-    // 1) Guest Mode
-    if (await _checkGuestStatus()) {
-      emit(
-        state.copyWith(
-          authCheckState: RequestState.loaded,
-          isGuest: true,
-          // initialRoute: AppRoutes.homeScreen,
-        ),
-      );
-      return;
-    }
 
     // 2) Load token, check validity
     final token = await _tokenRepository.getTokenFromStorage();
@@ -109,7 +73,6 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> logout() async {
     await _tokenRepository.logout();
-    await CacheHelper.removeData(key: IS_GUEST_KEY);
     _user = null;
     emit(
       state.copyWith(

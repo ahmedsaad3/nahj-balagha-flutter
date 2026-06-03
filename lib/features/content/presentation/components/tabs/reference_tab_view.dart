@@ -4,6 +4,9 @@ import 'package:nahj_balagha_flutter/features/content/domain/entities/content_de
 import 'package:nahj_balagha_flutter/features/content/presentation/controller/content_cubit.dart';
 import 'package:nahj_balagha_flutter/features/content/presentation/controller/content_state.dart';
 import 'package:nahj_balagha_flutter/shared/components/bloc_state_builder_widget.dart';
+import 'package:nahj_balagha_flutter/shared/components/circular_progress_widget.dart';
+import 'package:nahj_balagha_flutter/shared/components/collection_view_widget.dart';
+import 'package:nahj_balagha_flutter/shared/components/soft_divider_widget.dart.dart';
 import 'package:nahj_balagha_flutter/shared/components/text_widget.dart';
 
 class ReferenceTabView extends StatelessWidget {
@@ -11,62 +14,48 @@ class ReferenceTabView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocStateBuilderWidget<ContentCubit, ContentState, ContentDetailsEntity?>(
+    return BlocStateBuilderWidget<
+      ContentCubit,
+      ContentState,
+      ContentDetailsEntity?
+    >(
       stateSelector: (state) => state.requestState,
       dataSelector: (state) => state.contentDetails,
       isEmptyChecker: (content) =>
           content == null || content.references.isEmpty,
       emptyMessage: "لا توجد أسانيد متاحة",
-      loadingBuilder: (context) =>
-          const Center(child: CircularProgressIndicator()),
+      loadingBuilder: (context) => CircularProgressWidget(),
       loadedBuilder: (context, state, content) {
-        return ListView.separated(
-          padding: const EdgeInsets.all(20),
+        return CollectionViewWidget(
           itemCount: content!.references.length,
-          separatorBuilder: (context, index) => const SizedBox(height: 16),
+          separatorBuilder: (context, index) => const Padding(
+            padding: EdgeInsets.symmetric(vertical: 14),
+            child: SoftDividerWidget(),
+          ),
           itemBuilder: (context, index) {
             final ref = content.references[index];
-            return Card(
-              elevation: 1,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+            return Column(
+              spacing: 10,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
                   children: [
-                    Row(
-                      children: [
-                        const Icon(
-                          Icons.menu_book,
-                          color: AppColorsLight.secondary,
-                          size: 20,
-                        ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: TextWidget(
-                            title: ref.source,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                            color: AppColorsLight.primaryDark,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
-                    Text(
-                      ref.details,
-                      style: const TextStyle(
-                        fontFamily: 'Cairo',
-                        fontSize: 14,
-                        height: 1.6,
-                        color: AppColorsLight.textPrimary,
+                    Expanded(
+                      child: TextWidget(
+                        title: ref.source,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
                       ),
                     ),
                   ],
                 ),
-              ),
+                TextWidget(
+                  title: ref.details,
+                  fontSize: 16,
+                  height: 1.8,
+                  color: AppColorsLight.textPrimary,
+                ),
+              ],
             );
           },
         );

@@ -4,9 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nahj_balagha_flutter/core/network/error_message_model.dart';
 import 'package:nahj_balagha_flutter/core/network/result.dart';
-import 'package:nahj_balagha_flutter/core/services/cache_helper.dart';
 import 'package:nahj_balagha_flutter/core/usecase/base_usecase.dart';
-import 'package:nahj_balagha_flutter/core/utils/constant.dart';
 import 'package:nahj_balagha_flutter/core/utils/enums.dart';
 import 'package:nahj_balagha_flutter/features/auth/data/repository/token_repository.dart';
 import 'package:nahj_balagha_flutter/features/auth/data/domain/usecases/signup_usecase.dart';
@@ -95,7 +93,6 @@ class SignupCubit extends Cubit<SignupState> {
       final user = result.response["visitor"];
       final token = result.response["token"];
       await _tokenRepository.set(token: token, user: user);
-      await CacheHelper.removeData(key: IS_GUEST_KEY);
 
       emit(state.copyWith(signupState: RequestState.loaded, user: user));
       return;

@@ -40,3 +40,14 @@ flutter:
     - assets/svg/
     - assets/images/
     - assets/fonts/
+
+  fonts:
+    - family: Cairo
+      fonts:
+        - asset: assets/fonts/cairo/Cairo-Regular.ttf
+          weight: 400
+          style: normal
+
+        - asset: assets/fonts/cairo/Cairo-Bold.ttf
+          weight: 700
+          style: normal

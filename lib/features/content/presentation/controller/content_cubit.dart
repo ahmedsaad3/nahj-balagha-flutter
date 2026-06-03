@@ -122,6 +122,10 @@ class ContentCubit extends Cubit<ContentState> {
     emit(state.copyWith(selectedScholars: []));
   }
 
+  void setSelectedScholars(List<String> scholarIds) {
+    emit(state.copyWith(selectedScholars: scholarIds));
+  }
+
   @override
   Future<void> close() {
     _audioTimer?.cancel();

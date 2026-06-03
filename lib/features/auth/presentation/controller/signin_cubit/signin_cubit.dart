@@ -1,11 +1,8 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nahj_balagha_flutter/core/network/error_message_model.dart';
 import 'package:nahj_balagha_flutter/core/network/result.dart';
-import 'package:nahj_balagha_flutter/core/services/cache_helper.dart';
-import 'package:nahj_balagha_flutter/core/utils/constant.dart';
 import 'package:nahj_balagha_flutter/core/utils/enums.dart';
 import 'package:nahj_balagha_flutter/features/auth/data/repository/token_repository.dart';
 import 'package:nahj_balagha_flutter/features/auth/data/domain/usecases/signin_usecase.dart';
@@ -70,7 +67,6 @@ class SigninCubit extends Cubit<SigninState> {
     if (result is Success) {
       final user = result.response["visitor"];
       await _tokenRepository.set(token: result.response["token"], user: user);
-      await CacheHelper.removeData(key: IS_GUEST_KEY);
 
       emit(state.copyWith(signinState: RequestState.loaded, user: user));
       return;

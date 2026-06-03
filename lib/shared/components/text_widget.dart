@@ -28,7 +28,6 @@ class TextWidget extends StatelessWidget {
     this.overflow,
     this.height,
     this.fontFamily = FONT_FAMILY_CAIRO,
-    // this.fontFamily = FONT_FAMILY_CAIRO,
     this.textStyle,
     this.textDirection,
     this.underline = false,

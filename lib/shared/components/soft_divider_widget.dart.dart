@@ -18,7 +18,7 @@ class SoftDividerWidget extends StatelessWidget {
     this.length,
     this.thickness = 1,
     this.intensity = 0.3,
-    this.color = AppColorsLight.primary,
+    this.color = AppColorsLight.textPrimary,
     this.radius = 999,
     this.enableGradient = true,
     this.margin,

@@ -15,12 +15,17 @@ class SermonTabView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocStateBuilderWidget<ContentCubit, ContentState, ContentDetailsEntity?>(
+    return BlocStateBuilderWidget<
+      ContentCubit,
+      ContentState,
+      ContentDetailsEntity?
+    >(
       stateSelector: (state) => state.requestState,
       dataSelector: (state) => state.contentDetails,
       isEmptyChecker: (content) => content == null || content.sentences.isEmpty,
       emptyMessage: "لا توجد خطبة متاحة",
-      loadingBuilder: (context) => const Center(child: CircularProgressIndicator()),
+      loadingBuilder: (context) =>
+          const Center(child: CircularProgressIndicator()),
       loadedBuilder: (context, state, content) {
         return Stack(
           children: [
@@ -30,8 +35,9 @@ class SermonTabView extends StatelessWidget {
                 textAlign: TextAlign.justify,
                 text: TextSpan(
                   style: const TextStyle(
-                    fontSize: 20,
-                    height: 1.5,
+                    fontSize: 18,
+                    height: 1.8,
+                    fontFamily: FONT_FAMILY_CAIRO,
                     color: AppColorsLight.textPrimary,
                   ),
                   children: content!.sentences.map((sentence) {
@@ -42,10 +48,15 @@ class SermonTabView extends StatelessWidget {
                         backgroundColor: isSelected
                             ? AppColorsLight.secondary.withValues(alpha: 0.25)
                             : Colors.transparent,
+                        height: 1.8,
+                        fontFamily: FONT_FAMILY_CAIRO,
+                        color: AppColorsLight.textPrimary,
                       ),
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
-                          context.read<ContentCubit>().selectSentence(sentence.id);
+                          context.read<ContentCubit>().selectSentence(
+                            sentence.id,
+                          );
                           if (state.selectedSentenceId != sentence.id) {
                             _showSentenceActions(context, sentence);
                           }
@@ -75,7 +86,10 @@ class SermonTabView extends StatelessWidget {
               child: FloatingActionButton(
                 backgroundColor: AppColorsLight.primary,
                 elevation: 4,
-                child: const Icon(Icons.music_note_rounded, color: Colors.white),
+                child: const Icon(
+                  Icons.music_note_rounded,
+                  color: Colors.white,
+                ),
                 onPressed: () {
                   context.read<ContentCubit>().togglePlayerVisibility();
                 },
@@ -87,7 +101,10 @@ class SermonTabView extends StatelessWidget {
     );
   }
 
-  void _showSentenceActions(BuildContext context, SermonSentenceEntity sentence) {
+  void _showSentenceActions(
+    BuildContext context,
+    SermonSentenceEntity sentence,
+  ) {
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.white,
@@ -96,80 +113,77 @@ class SermonTabView extends StatelessWidget {
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
       builder: (bottomSheetContext) {
-        return Directionality(
-          textDirection: TextDirection.rtl,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 20),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  width: 40,
-                  height: 4,
-                  decoration: BoxDecoration(
-                    color: Colors.grey[300],
-                    borderRadius: BorderRadius.circular(2),
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 40,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: Colors.grey[300],
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+              ListTile(
+                leading: const Icon(
+                  Icons.menu_book_rounded,
+                  color: AppColorsLight.primary,
+                ),
+                title: const Text(
+                  'إعراب هذه الجملة',
+                  style: TextStyle(
+                    fontFamily: 'Cairo',
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
                   ),
                 ),
-                ListTile(
-                  leading: const Icon(
-                    Icons.menu_book_rounded,
-                    color: AppColorsLight.primary,
-                  ),
-                  title: const Text(
-                    'إعراب هذه الجملة',
-                    style: TextStyle(
-                      fontFamily: 'Cairo',
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
-                  ),
-                  onTap: () {
-                    Navigator.pop(bottomSheetContext);
-                    DefaultTabController.of(context).animateTo(2);
-                  },
+                onTap: () {
+                  Navigator.pop(bottomSheetContext);
+                  DefaultTabController.of(context).animateTo(2);
+                },
+              ),
+              ListTile(
+                leading: const Icon(
+                  Icons.g_translate_rounded,
+                  color: AppColorsLight.primary,
                 ),
-                ListTile(
-                  leading: const Icon(
-                    Icons.g_translate_rounded,
-                    color: AppColorsLight.primary,
+                title: const Text(
+                  'شرح المفردات غريبة اللفظ',
+                  style: TextStyle(
+                    fontFamily: 'Cairo',
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
                   ),
-                  title: const Text(
-                    'شرح المفردات غريبة اللفظ',
-                    style: TextStyle(
-                      fontFamily: 'Cairo',
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
-                  ),
-                  onTap: () {
-                    Navigator.pop(bottomSheetContext);
-                    DefaultTabController.of(context).animateTo(3);
-                  },
                 ),
-                ListTile(
-                  leading: const Icon(
-                    Icons.play_circle_outline_rounded,
-                    color: AppColorsLight.primary,
-                  ),
-                  title: const Text(
-                    'استماع إلى هذا المقطع المحدّد',
-                    style: TextStyle(
-                      fontFamily: 'Cairo',
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
-                  ),
-                  onTap: () {
-                    Navigator.pop(bottomSheetContext);
-                    final cubit = context.read<ContentCubit>();
-                    if (!cubit.state.isPlaying) {
-                      cubit.togglePlayPause();
-                    }
-                  },
+                onTap: () {
+                  Navigator.pop(bottomSheetContext);
+                  DefaultTabController.of(context).animateTo(3);
+                },
+              ),
+              ListTile(
+                leading: const Icon(
+                  Icons.play_circle_outline_rounded,
+                  color: AppColorsLight.primary,
                 ),
-              ],
-            ),
+                title: const Text(
+                  'استماع إلى هذا المقطع المحدّد',
+                  style: TextStyle(
+                    fontFamily: 'Cairo',
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
+                onTap: () {
+                  Navigator.pop(bottomSheetContext);
+                  final cubit = context.read<ContentCubit>();
+                  if (!cubit.state.isPlaying) {
+                    cubit.togglePlayPause();
+                  }
+                },
+              ),
+            ],
           ),
         );
       },

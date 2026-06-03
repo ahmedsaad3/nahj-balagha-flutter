@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:nahj_balagha_flutter/features/auth/presentation/screens/signin_screen.dart';
 import 'package:nahj_balagha_flutter/features/auth/presentation/screens/signup_screen.dart';
-import 'package:nahj_balagha_flutter/features/auth/presentation/screens/welcome_screen.dart';
 import 'package:nahj_balagha_flutter/features/auth/presentation/screens/onboarding_screen.dart';
 import 'package:nahj_balagha_flutter/features/books/domain/entities/book_entity.dart';
 import 'package:nahj_balagha_flutter/features/browse/presentation/screens/browse_screen.dart';
@@ -20,6 +19,8 @@ import 'package:nahj_balagha_flutter/features/settings/presentation/screens/sett
 import 'package:nahj_balagha_flutter/features/browse/domain/entities/browse_node.dart';
 import 'package:nahj_balagha_flutter/features/browse/presentation/screens/category_screen.dart';
 import 'package:nahj_balagha_flutter/features/content/presentation/screens/content_reader_screen.dart';
+import 'package:nahj_balagha_flutter/features/content/domain/entities/scholar_explanation_entity.dart';
+import 'package:nahj_balagha_flutter/features/content/presentation/screens/full_explanation_screen.dart';
 
 class AppRoutes {
   static final GlobalKey<NavigatorState> navigatorKey =
@@ -59,14 +60,12 @@ class AppRoutes {
   static const String browseScreen = "browse_screen";
   static const String categoryScreen = "category_screen";
   static const String contentReaderScreen = "content_reader_screen";
+  static const String fullExplanationScreen = "full_explanation_screen";
 
   static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case navigationScreen:
         return MaterialPageRoute(builder: (_) => const NavigationScreen());
-
-      case welcomeScreen:
-        return MaterialPageRoute(builder: (_) => const WelcomeScreen());
 
       case onboardingScreen:
         return MaterialPageRoute(builder: (_) => const OnboardingScreen());
@@ -132,6 +131,21 @@ class AppRoutes {
             builder: (_) => ContentReaderScreen(contentId: contentId),
           );
         }
+
+      case fullExplanationScreen:
+        final args = settings.arguments as Map<String, dynamic>;
+        final initialExplanation = args['initialExplanation'] as ScholarExplanationEntity;
+        final explanations = args['explanations'] as List<ScholarExplanationEntity>;
+        final isComparing = args['isComparing'] as bool? ?? false;
+        final selectedIds = args['selectedIds'] as List<String>? ?? const [];
+        return MaterialPageRoute(
+          builder: (_) => FullExplanationScreen(
+            initialExplanation: initialExplanation,
+            explanations: explanations,
+            isComparing: isComparing,
+            selectedIds: selectedIds,
+          ),
+        );
     }
     return MaterialPageRoute(
       builder: (_) =>
