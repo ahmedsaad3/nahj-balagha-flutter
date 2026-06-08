@@ -39,53 +39,50 @@ class _ContentReaderScreenState extends State<ContentReaderScreen> {
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 5,
-      child: Directionality(
-        textDirection: TextDirection.rtl,
-        child: Scaffold(
-          appBar: UiUtils.appBar(context: context),
-          body: BlocBuilder<ContentCubit, ContentState>(
-            builder: (context, state) {
-              if (state.requestState == RequestState.loading) {
-                return const Center(child: CircularProgressIndicator());
-              }
-
-              if (state.requestState == RequestState.error) {
-                return Center(
-                  child: TextWidget(
-                    title: state.errorMessage,
-                    color: AppColorsLight.red,
-                    fontSize: 16,
-                  ),
-                );
-              }
-
-              final content = state.contentDetails;
-              if (content == null) {
-                return const Center(
-                  child: TextWidget(title: "المحتوى غير موجود", fontSize: 16),
-                );
-              }
-
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  _buildTabBar(),
-                  _buildBreadcrumbs(content.title),
-                  Expanded(
-                    child: TabBarView(
-                      children: const [
-                        SermonTabView(),
-                        ExplanationTabView(),
-                        GrammarTabView(),
-                        VocabularyTabView(),
-                        ReferenceTabView(),
-                      ],
-                    ),
-                  ),
-                ],
+      child: Scaffold(
+        appBar: UiUtils.appBar(context: context),
+        body: BlocBuilder<ContentCubit, ContentState>(
+          builder: (context, state) {
+            if (state.requestState == RequestState.loading) {
+              return const Center(child: CircularProgressIndicator());
+            }
+      
+            if (state.requestState == RequestState.error) {
+              return Center(
+                child: TextWidget(
+                  title: state.errorMessage,
+                  color: AppColorsLight.red,
+                  fontSize: 16,
+                ),
               );
-            },
-          ),
+            }
+      
+            final content = state.contentDetails;
+            if (content == null) {
+              return const Center(
+                child: TextWidget(title: "المحتوى غير موجود", fontSize: 16),
+              );
+            }
+      
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                _buildTabBar(),
+                _buildBreadcrumbs(content.title),
+                Expanded(
+                  child: TabBarView(
+                    children: const [
+                      SermonTabView(),
+                      ExplanationTabView(),
+                      GrammarTabView(),
+                      VocabularyTabView(),
+                      ReferenceTabView(),
+                    ],
+                  ),
+                ),
+              ],
+            );
+          },
         ),
       ),
     );

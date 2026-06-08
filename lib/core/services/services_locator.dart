@@ -33,6 +33,11 @@ import 'package:nahj_balagha_flutter/features/settings/presentation/controller/f
 import 'package:nahj_balagha_flutter/features/settings/presentation/controller/settings_cubit/settings_cubit.dart';
 import 'package:nahj_balagha_flutter/features/navigation/presentation/controller/navigation_cubit.dart';
 import 'package:nahj_balagha_flutter/features/search/presentation/controller/search_cubit.dart';
+import 'package:nahj_balagha_flutter/features/search/data/datasource/base_search_remote_data_source.dart';
+import 'package:nahj_balagha_flutter/features/search/data/datasource/search_remote_data_source.dart';
+import 'package:nahj_balagha_flutter/features/search/data/repository/search_repository.dart';
+import 'package:nahj_balagha_flutter/features/search/domain/repository/base_search_repository.dart';
+import 'package:nahj_balagha_flutter/features/search/domain/usecases/search_usecase.dart';
 import 'package:nahj_balagha_flutter/firebase/firebase_notification_service.dart';
 import 'package:nahj_balagha_flutter/shared/cubit/connectivity/connectivity_cubit.dart';
 import 'package:nahj_balagha_flutter/features/home/data/repository/home_repository_impl.dart';
@@ -127,6 +132,11 @@ class ServicesLocator {
       () => ScholarRemoteDataSource(client: sl<DioClient>()),
     );
 
+    // Search Remote Data Source
+    sl.registerLazySingleton<BaseSearchRemoteDataSource>(
+      () => SearchRemoteDataSource(client: sl<DioClient>()),
+    );
+
 
     // ============================================================
     // todo: REPOSITORIES
@@ -173,6 +183,11 @@ class ServicesLocator {
     // Scholar Repository
     sl.registerLazySingleton<BaseScholarRepository>(
       () => ScholarRepository(baseScholarRemoteDataSource: sl()),
+    );
+
+    // Search Repository
+    sl.registerLazySingleton<BaseSearchRepository>(
+      () => SearchRepository(baseSearchRemoteDataSource: sl()),
     );
 
 
@@ -233,6 +248,11 @@ class ServicesLocator {
       () => GetScholarsUseCase(baseScholarRepository: sl()),
     );
 
+    // Search Use Case
+    sl.registerLazySingleton<SearchUseCase>(
+      () => SearchUseCase(baseSearchRepository: sl()),
+    );
+
 
     // ============================================================
     // todo: PRESENTATION LAYER (CUBITS)
@@ -285,7 +305,9 @@ class ServicesLocator {
     sl.registerFactory<NavigationCubit>(() => NavigationCubit());
 
     // Search Cubit
-    sl.registerFactory<SearchCubit>(() => SearchCubit());
+    sl.registerFactory<SearchCubit>(
+      () => SearchCubit(searchUseCase: sl<SearchUseCase>()),
+    );
 
     // Home Cubit
     sl.registerFactory<HomeCubit>(

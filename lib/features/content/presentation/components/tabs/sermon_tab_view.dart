@@ -24,8 +24,7 @@ class SermonTabView extends StatelessWidget {
       dataSelector: (state) => state.contentDetails,
       isEmptyChecker: (content) => content == null || content.sentences.isEmpty,
       emptyMessage: "لا توجد خطبة متاحة",
-      loadingBuilder: (context) =>
-          const Center(child: CircularProgressIndicator()),
+      loadingBuilder: (context) => CircularProgressIndicator(),
       loadedBuilder: (context, state, content) {
         return Stack(
           children: [
@@ -170,7 +169,7 @@ class SermonTabView extends StatelessWidget {
                 title: const Text(
                   'استماع إلى هذا المقطع المحدّد',
                   style: TextStyle(
-                    fontFamily: 'Cairo',
+                    fontFamily: FONT_FAMILY_CAIRO,
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
                   ),

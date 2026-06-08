@@ -4,6 +4,7 @@ import 'package:nahj_balagha_flutter/core/utils/router/app_routes.dart';
 import 'package:nahj_balagha_flutter/core/utils/theme/app_color/app_colors_light.dart';
 import 'package:nahj_balagha_flutter/core/utils/ui_utils.dart';
 import 'package:nahj_balagha_flutter/features/browse/domain/entities/browse_node.dart';
+import 'package:nahj_balagha_flutter/features/browse/presentation/components/ContentSnippetWidget.dart';
 import 'package:nahj_balagha_flutter/shared/components/breadcrumbs_widget.dart';
 import 'package:nahj_balagha_flutter/features/browse/presentation/components/browse_node_widget.dart';
 import 'package:nahj_balagha_flutter/shared/components/collection_view_widget.dart';
@@ -132,48 +133,21 @@ class _CategoryScreenState extends State<CategoryScreen> {
   }
 
   Widget _buildDirectContentView(List<ContentSnippet> contentList) {
-    return ListView.separated(
-      padding: const EdgeInsets.all(HORIZONTAL),
+    return CollectionViewWidget(
       itemCount: contentList.length,
-      separatorBuilder: (context, index) => const SizedBox(height: 12),
+      horizontal: 0,
       itemBuilder: (context, index) {
         final snippet = contentList[index];
-        return GestureDetector(
+        return ContentSnippetWidget(
+          title: snippet.title,
+          description: snippet.excerpt,
           onTap: () {
             Navigator.pushNamed(
               context,
               AppRoutes.contentReaderScreen,
-              arguments: {
-                'contentId': snippet.id,
-                'trail': widget.trail,
-              },
+              arguments: {'contentId': snippet.id, 'trail': widget.trail},
             );
           },
-          child: Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: const Color(0xFFF2F2F7),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                TextWidget(
-                  title: snippet.title,
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  color: AppColorsLight.textPrimary,
-                ),
-                const SizedBox(height: 8),
-                TextWidget(
-                  title: snippet.excerpt,
-                  fontSize: 13,
-                  height: 1.6,
-                  color: AppColorsLight.textPrimary,
-                ),
-              ],
-            ),
-          ),
         );
       },
     );

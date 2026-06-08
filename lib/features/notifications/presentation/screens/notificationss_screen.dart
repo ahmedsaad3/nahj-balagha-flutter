@@ -91,7 +91,7 @@ class MailboxList extends StatelessWidget {
                   child: SizedBox(
                     height: context.dimensions.screenHeight * 0.7,
                     child: Center(
-                      child: EmptyWidget(message: "لا يوجد بيانات"),
+                      child: EmptyWidget(title: "لا يوجد بيانات"),
                     ),
                   ),
                 );
@@ -146,7 +146,7 @@ class NotificationsList extends StatelessWidget {
                   child: SizedBox(
                     height: context.dimensions.screenHeight * 0.7,
                     child: Center(
-                      child: EmptyWidget(message: "لا يوجد بيانات"),
+                      child: EmptyWidget(title: "لا يوجد بيانات"),
                     ),
                   ),
                 );

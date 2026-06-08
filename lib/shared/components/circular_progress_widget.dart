@@ -6,7 +6,7 @@ class CircularProgressWidget extends StatelessWidget {
   final Animation<Color?>? valueColor;
   const CircularProgressWidget({
     super.key,
-    this.color = AppColorsLight.white,
+    this.color = AppColorsLight.primary,
     this.valueColor,
   });
 

@@ -72,7 +72,7 @@ class BlocStateBuilderWidget<C extends StateStreamableSource<S>, S, T>
   }
 
   Widget _buildDefaultEmptyWidget(BuildContext context) {
-    return EmptyWidget(message: emptyMessage ?? "لا يوجد بيانات");
+    return EmptyWidget(title: emptyMessage ?? "لا يوجد بيانات");
   }
 
   @override
