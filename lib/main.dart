@@ -19,6 +19,7 @@ import 'package:nahj_balagha_flutter/features/books/presentation/controller/book
 import 'package:nahj_balagha_flutter/features/scholars/presentation/controller/scholar_cubit.dart';
 import 'package:nahj_balagha_flutter/features/browse/presentation/controller/browse_cubit.dart';
 import 'package:nahj_balagha_flutter/features/content/presentation/controller/content_cubit.dart';
+import 'package:nahj_balagha_flutter/features/favorites/presentation/controller/favorite_cubit.dart';
 import 'package:nahj_balagha_flutter/firebase/firebase_notification_service.dart';
 import 'package:nahj_balagha_flutter/l10n/app_localizations.dart';
 import 'package:nahj_balagha_flutter/l10n/l10n.dart';
@@ -56,6 +57,9 @@ void main() async {
           ),
           BlocProvider<ContentCubit>(
             create: (context) => sl<ContentCubit>(),
+          ),
+          BlocProvider<FavoriteCubit>(
+            create: (context) => sl<FavoriteCubit>()..getFavorites(),
           ),
           BlocProvider<ConnectivityCubit>(
             create: (context) => sl<ConnectivityCubit>(),
@@ -115,7 +119,8 @@ class MyApp extends StatelessWidget {
           navigatorKey: AppRoutes.navigatorKey,
           onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,
           debugShowCheckedModeBanner: false,
-          locale: data.locale,
+          locale: Locale('ar'),
+          // locale: data.locale,
           supportedLocales: L10n.locals,
           localizationsDelegates: const [
             AppLocalizations.delegate,

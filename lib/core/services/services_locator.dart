@@ -63,7 +63,11 @@ import 'package:nahj_balagha_flutter/features/scholars/domain/usecases/get_schol
 import 'package:nahj_balagha_flutter/features/scholars/presentation/controller/scholar_cubit.dart';
 import 'package:nahj_balagha_flutter/features/browse/presentation/controller/browse_cubit.dart';
 import 'package:nahj_balagha_flutter/features/content/presentation/controller/content_cubit.dart';
-
+import 'package:nahj_balagha_flutter/features/favorites/data/datasource/base_favorite_remote_data_source.dart';
+import 'package:nahj_balagha_flutter/features/favorites/data/datasource/favorite_remote_data_source.dart';
+import 'package:nahj_balagha_flutter/features/favorites/data/repository/favorite_repository.dart';
+import 'package:nahj_balagha_flutter/features/favorites/domain/repository/base_favorite_repository.dart';
+import 'package:nahj_balagha_flutter/features/favorites/presentation/controller/favorite_cubit.dart';
 
 final sl = GetIt.instance;
 
@@ -137,6 +141,10 @@ class ServicesLocator {
       () => SearchRemoteDataSource(client: sl<DioClient>()),
     );
 
+    // Favorite Remote Data Source
+    sl.registerLazySingleton<BaseFavoriteRemoteDataSource>(
+      () => FavoriteRemoteDataSource(client: sl<DioClient>()),
+    );
 
     // ============================================================
     // todo: REPOSITORIES
@@ -188,6 +196,11 @@ class ServicesLocator {
     // Search Repository
     sl.registerLazySingleton<BaseSearchRepository>(
       () => SearchRepository(baseSearchRemoteDataSource: sl()),
+    );
+
+    // Favorite Repository
+    sl.registerLazySingleton<BaseFavoriteRepository>(
+      () => FavoriteRepository(baseFavoriteRemoteDataSource: sl()),
     );
 
 
@@ -332,6 +345,11 @@ class ServicesLocator {
 
     // Content Cubit
     sl.registerFactory<ContentCubit>(() => ContentCubit());
+
+    // Favorite Cubit
+    sl.registerFactory<FavoriteCubit>(
+      () => FavoriteCubit(sl<BaseFavoriteRepository>()),
+    );
 
 
     // Connectivity Cubit (Singleton for app-wide connectivity state)
