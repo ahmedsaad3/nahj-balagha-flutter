@@ -179,7 +179,6 @@ class ServicesLocator {
       () => HomeRepositoryImpl(
         homeRemoteDataSource: sl(),
         bookRemoteDataSource: sl(),
-        scholarRemoteDataSource: sl(),
       ),
     );
 
@@ -202,7 +201,6 @@ class ServicesLocator {
     sl.registerLazySingleton<BaseFavoriteRepository>(
       () => FavoriteRepository(baseFavoriteRemoteDataSource: sl()),
     );
-
 
     // ============================================================
     // todo: USE CASES
@@ -266,7 +264,6 @@ class ServicesLocator {
       () => SearchUseCase(baseSearchRepository: sl()),
     );
 
-
     // ============================================================
     // todo: PRESENTATION LAYER (CUBITS)
     // ============================================================
@@ -324,20 +321,18 @@ class ServicesLocator {
 
     // Home Cubit
     sl.registerFactory<HomeCubit>(
-      () => HomeCubit(getHomeDataUseCase: sl()),
+      () => HomeCubit(getHomeDataUseCase: sl(), getScholarsUseCase: sl()),
     );
 
     // Book Cubit
     sl.registerFactory<BookCubit>(
-      () => BookCubit(
-        getArticlesUseCases: sl(),
-        getForeignStudiesUseCases: sl(),
-      ),
+      () =>
+          BookCubit(getArticlesUseCases: sl(), getForeignStudiesUseCases: sl()),
     );
 
     // Scholar Cubit
     sl.registerFactory<ScholarCubit>(
-      () => ScholarCubit(sl()),
+      () => ScholarCubit(getScholarsUseCase: sl()),
     );
 
     // Browse Cubit
@@ -350,7 +345,6 @@ class ServicesLocator {
     sl.registerFactory<FavoriteCubit>(
       () => FavoriteCubit(sl<BaseFavoriteRepository>()),
     );
-
 
     // Connectivity Cubit (Singleton for app-wide connectivity state)
     sl.registerLazySingleton<ConnectivityCubit>(() => ConnectivityCubit());

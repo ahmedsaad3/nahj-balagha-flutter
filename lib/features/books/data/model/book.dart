@@ -18,14 +18,4 @@ class BookModel extends BookEntity {
       description: json['description'] as String,
     );
   }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'title': title,
-      'author': author,
-      'coverImage': coverImage,
-      'description': description,
-    };
-  }
 }

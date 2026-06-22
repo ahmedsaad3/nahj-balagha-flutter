@@ -1,6 +1,6 @@
 import 'package:nahj_balagha_flutter/core/network/result.dart';
-import 'package:nahj_balagha_flutter/features/scholars/data/model/scholar.dart';
+import 'package:nahj_balagha_flutter/core/usecase/base_usecase.dart';
 
 abstract class BaseScholarRemoteDataSource {
-  Future<Result<List<ScholarModel>>> getScholars();
+  Future<Result> getScholars({required PaginationParams params});
 }

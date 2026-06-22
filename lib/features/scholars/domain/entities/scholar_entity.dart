@@ -1,33 +1,47 @@
 import 'package:equatable/equatable.dart';
-import 'package:nahj_balagha_flutter/features/books/domain/entities/book_entity.dart';
 
 class ScholarEntity extends Equatable {
   final String id;
-  final String name;
-  final String specialization;
+  final String fullName;
+  final String title;
   final String bio;
-  final String image;
-  final bool isCommentator;
-  final List<BookEntity> works;
+  final int? birthYear;
+  final int? deathYear;
+  final String imageUrl;
+  final String personTypeId;
+  final String personTypeName;
+  final String createdAt;
+  final String? updatedAt;
+  // final List<BookEntity> books;
 
   const ScholarEntity({
     required this.id,
-    required this.name,
-    required this.specialization,
+    required this.fullName,
+    required this.title,
     required this.bio,
-    required this.image,
-    required this.isCommentator,
-    required this.works,
+    this.birthYear,
+    this.deathYear,
+    required this.imageUrl,
+    required this.personTypeId,
+    required this.personTypeName,
+    required this.createdAt,
+    this.updatedAt,
+    // required this.books,
   });
 
   @override
   List<Object?> get props => [
     id,
-    name,
-    specialization,
+    fullName,
+    title,
     bio,
-    image,
-    isCommentator,
-    works,
+    birthYear,
+    deathYear,
+    imageUrl,
+    personTypeId,
+    personTypeName,
+    createdAt,
+    updatedAt,
+    // books,
   ];
 }

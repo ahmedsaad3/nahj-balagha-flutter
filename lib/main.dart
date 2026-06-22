@@ -9,7 +9,6 @@ import 'package:nahj_balagha_flutter/core/services/services_locator.dart';
 import 'package:nahj_balagha_flutter/core/utils/router/app_routes.dart';
 import 'package:nahj_balagha_flutter/core/utils/theme/theme_data/theme_data_light.dart';
 import 'package:nahj_balagha_flutter/features/auth/presentation/controller/auth_cubit/auth_cubit.dart';
-import 'package:nahj_balagha_flutter/features/home/presentation/controller/home_cubit.dart';
 import 'package:nahj_balagha_flutter/features/navigation/presentation/controller/navigation_cubit.dart';
 import 'package:nahj_balagha_flutter/features/auth/presentation/screens/onboarding_screen.dart';
 import 'package:nahj_balagha_flutter/features/search/presentation/controller/search_cubit.dart';
@@ -49,7 +48,6 @@ void main() async {
             create: (context) => sl<NavigationCubit>(),
           ),
           BlocProvider<SearchCubit>(create: (context) => sl<SearchCubit>()),
-          BlocProvider<HomeCubit>(create: (context) => sl<HomeCubit>()),
           BlocProvider<BookCubit>(create: (context) => sl<BookCubit>()),
           BlocProvider<ScholarCubit>(create: (context) => sl<ScholarCubit>()),
           BlocProvider<BrowseCubit>(

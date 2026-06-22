@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nahj_balagha_flutter/core/utils/constant.dart';
-import 'package:nahj_balagha_flutter/core/utils/router/app_routes.dart';
 import 'package:nahj_balagha_flutter/core/utils/theme/app_color/app_colors_light.dart';
 import 'package:nahj_balagha_flutter/core/utils/ui_utils.dart';
-import 'package:nahj_balagha_flutter/features/books/presentation/components/book_item_card.dart';
 import 'package:nahj_balagha_flutter/features/scholars/domain/entities/scholar_entity.dart';
 import 'package:nahj_balagha_flutter/shared/components/chip_widget.dart';
 import 'package:nahj_balagha_flutter/shared/components/text_widget.dart';
@@ -29,11 +27,9 @@ class ScholarDetailsScreen extends StatelessWidget {
                 children: [
                   const ChipWidget(label: "أعلام"),
                   ChipWidget(
-                    label: scholar.isCommentator
-                        ? "شخصيات تاريخية"
-                        : "أعلام الصحابة",
+                    label: scholar.personTypeName
                   ),
-                  ChipWidget(label: scholar.name),
+                  ChipWidget(label: scholar.fullName),
                 ],
               ),
             ),
@@ -49,13 +45,13 @@ class ScholarDetailsScreen extends StatelessWidget {
                     spacing: 10,
                     children: [
                       TextWidget(
-                        title: scholar.name,
+                        title: scholar.fullName,
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: AppColorsLight.textPrimary,
                       ),
                       TextWidget(
-                        title: scholar.specialization,
+                        title: scholar.title,
                         fontSize: 18,
                         color: AppColorsLight.gray,
                         height: 1.5,
@@ -67,9 +63,9 @@ class ScholarDetailsScreen extends StatelessWidget {
                 // Photo
                 ClipRRect(
                   borderRadius: BorderRadius.circular(15),
-                  child: scholar.image.startsWith('http')
+                  child: scholar.imageUrl.startsWith('http')
                       ? Image.network(
-                          scholar.image,
+                          scholar.imageUrl,
                           width: 120,
                           height: 120,
                           fit: BoxFit.cover,
@@ -86,7 +82,7 @@ class ScholarDetailsScreen extends StatelessWidget {
                               ),
                         )
                       : Image.asset(
-                          scholar.image,
+                          scholar.imageUrl,
                           width: 120,
                           height: 120,
                           fit: BoxFit.cover,
@@ -116,40 +112,40 @@ class ScholarDetailsScreen extends StatelessWidget {
             ),
 
             // Works section (ONLY for commentators)
-            if (scholar.isCommentator && scholar.works.isNotEmpty) ...[
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                spacing: 10,
-                children: [
-                  const TextWidget(
-                    title: "أهم أعماله",
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: AppColorsLight.textPrimary,
-                  ),
-                  SizedBox(
-                    height: 180,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: scholar.works.length,
-                      itemBuilder: (context, index) {
-                        final book = scholar.works[index];
-                        return BookItemCard(
-                          book: book,
-                          onTap: () {
-                            Navigator.pushNamed(
-                              context,
-                              AppRoutes.bookDetailsScreen,
-                              arguments: book,
-                            );
-                          },
-                        );
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ],
+            // if (scholar.isCommentator && scholar.works.isNotEmpty) ...[
+            //   Column(
+            //     crossAxisAlignment: CrossAxisAlignment.start,
+            //     spacing: 10,
+            //     children: [
+            //       const TextWidget(
+            //         title: "أهم أعماله",
+            //         fontSize: 16,
+            //         fontWeight: FontWeight.bold,
+            //         color: AppColorsLight.textPrimary,
+            //       ),
+            //       SizedBox(
+            //         height: 180,
+            //         child: ListView.builder(
+            //           scrollDirection: Axis.horizontal,
+            //           itemCount: scholar.works.length,
+            //           itemBuilder: (context, index) {
+            //             final book = scholar.works[index];
+            //             return BookItemCard(
+            //               book: book,
+            //               onTap: () {
+            //                 Navigator.pushNamed(
+            //                   context,
+            //                   AppRoutes.bookDetailsScreen,
+            //                   arguments: book,
+            //                 );
+            //               },
+            //             );
+            //           },
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ],
           ],
         ),
       ),

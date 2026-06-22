@@ -38,9 +38,9 @@ class ScholarAvatar extends StatelessWidget {
                 ],
               ),
               child: ClipOval(
-                child: scholar.image.startsWith('http')
+                child: scholar.imageUrl.startsWith('http')
                     ? Image.network(
-                        scholar.image,
+                        scholar.imageUrl,
                         fit: BoxFit.cover,
                         errorBuilder: (context, error, stackTrace) => Container(
                           color: AppColorsLight.grayLight,
@@ -52,7 +52,7 @@ class ScholarAvatar extends StatelessWidget {
                         ),
                       )
                     : Image.asset(
-                        scholar.image,
+                        scholar.imageUrl,
                         fit: BoxFit.cover,
                         errorBuilder: (context, error, stackTrace) => Container(
                           color: AppColorsLight.grayLight,
@@ -69,7 +69,7 @@ class ScholarAvatar extends StatelessWidget {
             SizedBox(
               width: 75,
               child: TextWidget(
-                title: scholar.name,
+                title: scholar.fullName,
                 fontSize: 11,
                 fontWeight: FontWeight.w500,
                 color: AppColorsLight.textPrimary,

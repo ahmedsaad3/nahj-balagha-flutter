@@ -1,5 +1,5 @@
 class ApiNetwork {
-  static const String BASE_API_NAHJ_BALAGHA = 'http:`//[IP_ADDRESS]/api`';
+  static const String BASE_API_NAHJ_BALAGHA = 'http://31.220.82.155:8088/api';
   static String IMAGE({required String path}) =>
       'http:`//[IP_ADDRESS]/storage/$path`';
 
@@ -8,12 +8,15 @@ class ApiNetwork {
   static const String SIGNUP_ENDPOINT = '/login';
   static const String UPDATE_PROFILE_ENDPOINT = '/login';
 
+  // Scholars
+  static const String GET_SCHOLARS = '$BASE_API_NAHJ_BALAGHA/Person';
+
   // Notifications
   static const String NOTIFICATIONS_ENDPOINT =
-      'http:`//[IP_ADDRESS]/api/notifications`';
+      '$BASE_API_NAHJ_BALAGHA/notifications';
   static const String MAILBOX_ENDPOINT =
-      'http:`//[IP_ADDRESS]/api/notifications`';
+      '$BASE_API_NAHJ_BALAGHA/notifications';
 
   // FAQ
-  static const String FAQS_ENDPOINT = 'http:`//[IP_ADDRESS]/api/user`';
+  static const String FAQS_ENDPOINT = '$BASE_API_NAHJ_BALAGHA/user';
 }
