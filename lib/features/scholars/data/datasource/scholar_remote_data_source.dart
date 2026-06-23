@@ -11,7 +11,7 @@ class ScholarRemoteDataSource implements BaseScholarRemoteDataSource {
 
   ScholarRemoteDataSource({required DioClient client}) : _client = client;
   @override
-  Future<Result> getScholars({required PaginationParams params}) async {
+  Future<Result> getScholars({required ScholarParams params}) async {
     return _client.getRequest(
       url: ApiNetwork.GET_SCHOLARS,
       isAuth: true,

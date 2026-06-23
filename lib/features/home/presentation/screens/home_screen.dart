@@ -14,7 +14,6 @@ import 'package:nahj_balagha_flutter/shared/components/bloc_state_builder_widget
 import 'package:nahj_balagha_flutter/shared/components/circular_progress_widget.dart';
 import 'package:nahj_balagha_flutter/shared/components/collection_view_widget.dart';
 import 'package:nahj_balagha_flutter/shared/components/section_header.dart';
-import 'package:nahj_balagha_flutter/shared/components/text_widget.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -28,7 +27,6 @@ class HomeScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) => sl<HomeCubit>()..loadHomeData(),
       child: Scaffold(
-        // backgroundColor: AppColorsLight.grayLight,
         body: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(
             horizontal: HORIZONTAL,
@@ -145,7 +143,9 @@ class HomeScreen extends StatelessWidget {
                 fontSize: 14,
                 titleColor: AppColorsLight.textPrimary,
                 actionText: "المزيد",
-                onActionTap: () {},
+                onActionTap: () {
+                  Navigator.pushNamed(context, AppRoutes.scholarsScreen);
+                },
               ),
               const SizedBox(height: 10),
               BlocStateBuilderWidget<HomeCubit, HomeState, List<ScholarEntity>>(
@@ -183,11 +183,14 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(height: 20),
 
               // Figures Section (أعلام نهج البلاغة)
-              const TextWidget(
+              SectionHeader(
                 title: "أعلام نهج البلاغة",
                 fontSize: 14,
-                fontWeight: FontWeight.bold,
-                color: AppColorsLight.textPrimary,
+                titleColor: AppColorsLight.textPrimary,
+                actionText: "المزيد",
+                onActionTap: () {
+                  Navigator.pushNamed(context, AppRoutes.scholarsScreen);
+                },
               ),
               const SizedBox(height: 10),
               BlocStateBuilderWidget<HomeCubit, HomeState, List<ScholarEntity>>(

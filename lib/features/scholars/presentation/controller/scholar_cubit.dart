@@ -13,10 +13,10 @@ class ScholarCubit extends PaginatedCubit<ScholarEntity, ScholarState> {
     : _getScholarsUseCase = getScholarsUseCase,
       super(initialState: const ScholarState());
 
-  Future<void> fetchBooks() async {
+  Future<void> fetchScholars() async {
     emitLoading();
 
-    final params = PaginationParams(pageNumber: 1, pageSize: pageSize);
+    final params = ScholarParams(pageNumber: 1, pageSize: pageSize);
     final result = await _getScholarsUseCase(params: params);
 
     if (result is Success) {
@@ -40,7 +40,7 @@ class ScholarCubit extends PaginatedCubit<ScholarEntity, ScholarState> {
     emitLoadingMore();
 
     final nextPage = state.currentPage + 1;
-    final params = PaginationParams(pageNumber: nextPage, pageSize: pageSize);
+    final params = ScholarParams(pageNumber: nextPage, pageSize: pageSize);
 
     final result = await _getScholarsUseCase(params: params);
 

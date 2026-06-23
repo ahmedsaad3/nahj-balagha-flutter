@@ -54,7 +54,11 @@ class HomeCubit extends Cubit<HomeState> {
     }
 
     final Result result = await _getScholarsUseCase(
-      params: PaginationParams(pageNumber: 1, pageSize: 8),
+      params: ScholarParams(
+        pageNumber: 1,
+        pageSize: 8,
+        personTypeId: '1e9ca45c-0118-47c3-8eb1-e2307bdc526d',
+      ),
     );
 
     if (result.response == null || isClosed) return;

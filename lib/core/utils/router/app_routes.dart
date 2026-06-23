@@ -13,6 +13,7 @@ import 'package:nahj_balagha_flutter/features/scholars/domain/entities/scholar_e
 import 'package:nahj_balagha_flutter/features/scholars/presentation/screens/scholar_details_screen.dart';
 import 'package:nahj_balagha_flutter/features/notifications/presentation/screens/notificationss_screen.dart';
 import 'package:nahj_balagha_flutter/features/profile/presentation/screens/profile_screen.dart';
+import 'package:nahj_balagha_flutter/features/scholars/presentation/screens/scholars_screen.dart';
 import 'package:nahj_balagha_flutter/features/search/presentation/screens/search_screen.dart';
 import 'package:nahj_balagha_flutter/features/settings/presentation/screens/faqs_screen.dart';
 import 'package:nahj_balagha_flutter/features/settings/presentation/screens/settings_screen.dart';
@@ -47,8 +48,11 @@ class AppRoutes {
 
   // todo: Home
   static const String homeScreen = "home_screen";
-  static const String scholarDetailsScreen = "scholar_details_screen";
   static const String bookDetailsScreen = "book_details_screen";
+
+  // todo: Scholars
+  static const String scholarDetailsScreen = "scholar_details_screen";
+  static const String scholarsScreen = "scholars_screen";
 
   // todo: Search
   static const String searchScreen = "search_screen";
@@ -69,6 +73,9 @@ class AppRoutes {
 
       case onboardingScreen:
         return MaterialPageRoute(builder: (_) => const OnboardingScreen());
+
+      case scholarsScreen:
+        return MaterialPageRoute(builder: (_) => const ScholarsScreen());
 
       case scholarDetailsScreen:
         final scholar = settings.arguments as ScholarEntity;
@@ -120,10 +127,8 @@ class AppRoutes {
           final contentId = args['contentId'] as String;
           final trail = args['trail'] as List<BrowseNode>;
           return MaterialPageRoute(
-            builder: (_) => ContentReaderScreen(
-              contentId: contentId,
-              trail: trail,
-            ),
+            builder: (_) =>
+                ContentReaderScreen(contentId: contentId, trail: trail),
           );
         } else {
           final contentId = settings.arguments as String;
@@ -134,8 +139,10 @@ class AppRoutes {
 
       case fullExplanationScreen:
         final args = settings.arguments as Map<String, dynamic>;
-        final initialExplanation = args['initialExplanation'] as ScholarExplanationEntity;
-        final explanations = args['explanations'] as List<ScholarExplanationEntity>;
+        final initialExplanation =
+            args['initialExplanation'] as ScholarExplanationEntity;
+        final explanations =
+            args['explanations'] as List<ScholarExplanationEntity>;
         final isComparing = args['isComparing'] as bool? ?? false;
         final selectedIds = args['selectedIds'] as List<String>? ?? const [];
         return MaterialPageRoute(

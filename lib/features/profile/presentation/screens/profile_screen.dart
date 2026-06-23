@@ -5,7 +5,6 @@ import 'package:nahj_balagha_flutter/core/utils/constant.dart';
 import 'package:nahj_balagha_flutter/core/utils/enums.dart';
 import 'package:nahj_balagha_flutter/core/utils/theme/app_color/app_colors_light.dart';
 import 'package:nahj_balagha_flutter/core/utils/ui_utils.dart';
-import 'package:nahj_balagha_flutter/extensions/context_extensions.dart';
 import 'package:nahj_balagha_flutter/features/auth/presentation/components/phone_input_field_widget.dart';
 import 'package:nahj_balagha_flutter/features/auth/presentation/controller/auth_cubit/auth_cubit.dart';
 import 'package:nahj_balagha_flutter/features/auth/presentation/controller/update_profile_cubit/update_profile_cubit.dart';

@@ -10,7 +10,7 @@ class ScholarRepository implements BaseScholarRepository {
 
   @override
   Future<Result> getScholars({
-    required PaginationParams params,
+    required ScholarParams params,
   }) async {
     return await baseScholarRemoteDataSource.getScholars(params: params);
   }

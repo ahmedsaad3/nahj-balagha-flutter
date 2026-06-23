@@ -102,16 +102,12 @@ class UpdateUserInfoParams extends Equatable {
 }
 
 class PaginationParams extends Equatable {
-  final int? categoryId;
   final String? searchTerm;
-  final String? subjectNameId;
   final int pageNumber;
   final int pageSize;
 
   const PaginationParams({
-    this.categoryId,
     this.searchTerm,
-    this.subjectNameId,
     this.pageNumber = 1,
     this.pageSize = 8,
   });
@@ -122,29 +118,42 @@ class PaginationParams extends Equatable {
       "PageSize": pageSize,
     };
 
-    if (categoryId != null) {
-      map["WorkTypeID"] = categoryId;
-    }
-
     if (searchTerm != null) {
       map["Title"] = searchTerm;
-    }
-
-    if (subjectNameId != null) {
-      map["SubjectNameID"] = subjectNameId;
     }
 
     return map;
   }
 
   @override
+  List<Object?> get props => [searchTerm, pageNumber, pageSize];
+}
+
+class ScholarParams extends PaginationParams {
+  final String? personTypeId;
+  const ScholarParams({
+    super.searchTerm,
+    super.pageNumber,
+    super.pageSize,
+    this.personTypeId,
+  });
+
+  @override
   List<Object?> get props => [
-    categoryId,
     searchTerm,
-    subjectNameId,
     pageNumber,
     pageSize,
+    personTypeId,
   ];
+
+  @override
+  Map<String, dynamic> toJson() {
+    final map = super.toJson();
+    if (personTypeId != null) {
+      map["PersonTypeID"] = personTypeId;
+    }
+    return map;
+  }
 }
 
 class TopicIdParams extends Equatable {
