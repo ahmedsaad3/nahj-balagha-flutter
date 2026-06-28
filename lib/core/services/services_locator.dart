@@ -14,6 +14,8 @@ import 'package:nahj_balagha_flutter/features/auth/presentation/controller/auth_
 import 'package:nahj_balagha_flutter/features/auth/presentation/controller/signin_cubit/signin_cubit.dart';
 import 'package:nahj_balagha_flutter/features/auth/presentation/controller/signup_cubit/signup_cubit.dart';
 import 'package:nahj_balagha_flutter/features/auth/presentation/controller/update_profile_cubit/update_profile_cubit.dart';
+import 'package:nahj_balagha_flutter/features/home/data/repository/home_repository.dart';
+import 'package:nahj_balagha_flutter/features/home/domain/usecases/get_hikmah_data_usecase.dart';
 import 'package:nahj_balagha_flutter/features/notifications/data/datasource/base_notifications_remote_data_source.dart';
 import 'package:nahj_balagha_flutter/features/notifications/data/datasource/notifications_remote_data_source.dart';
 import 'package:nahj_balagha_flutter/features/notifications/data/repository/notifications_repository.dart';
@@ -40,11 +42,9 @@ import 'package:nahj_balagha_flutter/features/search/domain/repository/base_sear
 import 'package:nahj_balagha_flutter/features/search/domain/usecases/search_usecase.dart';
 import 'package:nahj_balagha_flutter/firebase/firebase_notification_service.dart';
 import 'package:nahj_balagha_flutter/shared/cubit/connectivity/connectivity_cubit.dart';
-import 'package:nahj_balagha_flutter/features/home/data/repository/home_repository_impl.dart';
 import 'package:nahj_balagha_flutter/features/home/data/datasource/base_home_remote_data_source.dart';
 import 'package:nahj_balagha_flutter/features/home/data/datasource/home_remote_data_source.dart';
 import 'package:nahj_balagha_flutter/features/home/domain/repository/base_home_repository.dart';
-import 'package:nahj_balagha_flutter/features/home/domain/usecases/get_home_data_usecase.dart';
 import 'package:nahj_balagha_flutter/features/home/presentation/controller/home_cubit.dart';
 
 import 'package:nahj_balagha_flutter/features/books/data/datasource/base_book_remote_data_source.dart';
@@ -176,10 +176,7 @@ class ServicesLocator {
 
     // Home Repository
     sl.registerLazySingleton<BaseHomeRepository>(
-      () => HomeRepositoryImpl(
-        homeRemoteDataSource: sl(),
-        bookRemoteDataSource: sl(),
-      ),
+      () => HomeRepository(baseHomeRemoteDataSource: sl()),
     );
 
     // Book Repository
@@ -242,8 +239,8 @@ class ServicesLocator {
     );
 
     // Home Use Case
-    sl.registerLazySingleton<GetHomeDataUseCase>(
-      () => GetHomeDataUseCase(baseHomeRepository: sl()),
+    sl.registerLazySingleton<GetHikmahDataUseCase>(
+      () => GetHikmahDataUseCase(baseHomeRepository: sl()),
     );
 
     // Book Use Cases
@@ -321,7 +318,7 @@ class ServicesLocator {
 
     // Home Cubit
     sl.registerFactory<HomeCubit>(
-      () => HomeCubit(getHomeDataUseCase: sl(), getScholarsUseCase: sl()),
+      () => HomeCubit(getHikmahDataUseCase: sl(), getScholarsUseCase: sl()),
     );
 
     // Book Cubit

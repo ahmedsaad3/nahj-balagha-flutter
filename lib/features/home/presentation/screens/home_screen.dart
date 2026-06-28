@@ -6,6 +6,8 @@ import 'package:nahj_balagha_flutter/core/utils/enums.dart';
 import 'package:nahj_balagha_flutter/core/utils/router/app_routes.dart';
 import 'package:nahj_balagha_flutter/core/utils/theme/app_color/app_colors_light.dart';
 import 'package:nahj_balagha_flutter/extensions/responsive_extensions.dart';
+import 'package:nahj_balagha_flutter/features/home/domain/entities/hikmah_entity.dart';
+import 'package:nahj_balagha_flutter/features/home/presentation/components/hikmah_card.dart';
 import 'package:nahj_balagha_flutter/features/scholars/domain/entities/scholar_entity.dart';
 import 'package:nahj_balagha_flutter/features/scholars/presentation/components/scholar_avatar.dart';
 import 'package:nahj_balagha_flutter/features/home/presentation/controller/home_cubit.dart';
@@ -13,6 +15,7 @@ import 'package:nahj_balagha_flutter/features/home/presentation/controller/home_
 import 'package:nahj_balagha_flutter/shared/components/bloc_state_builder_widget.dart';
 import 'package:nahj_balagha_flutter/shared/components/circular_progress_widget.dart';
 import 'package:nahj_balagha_flutter/shared/components/collection_view_widget.dart';
+import 'package:nahj_balagha_flutter/shared/components/input_field_widget.dart';
 import 'package:nahj_balagha_flutter/shared/components/section_header.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -36,54 +39,30 @@ class HomeScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               // Search Bar
-              Container(
-                height: 50,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15),
-                  border: Border.all(color: AppColorsLight.gray.withAlpha(50)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: AppColorsLight.black.withAlpha(10),
-                      blurRadius: 4,
-                      offset: const Offset(0, 2),
-                    ),
-                  ],
-                ),
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: const Row(
-                  children: [
-                    Icon(
-                      Icons.search,
-                      color: AppColorsLight.secondary,
-                      size: 22,
-                    ),
-                    SizedBox(width: 10),
-                    Expanded(
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: "ابحث في نهج البلاغة...",
-                          hintStyle: TextStyle(
-                            color: AppColorsLight.gray,
-                            fontSize: 13,
-                            fontFamily: FONT_FAMILY_CAIRO,
-                          ),
-                          border: InputBorder.none,
-                          enabledBorder: InputBorder.none,
-                          focusedBorder: InputBorder.none,
-                          contentPadding: EdgeInsets.zero,
-                          filled: false,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+              InputFieldWidget(
+                hintText: "ابحث في نهج البلاغة...",
+                textInputType: TextInputType.text,
+                icon: Icons.search,
+                imageType: ImageType.icon,
               ),
-
               const SizedBox(height: 16),
 
               // Wisdom of the Day Card
-              // WisdomCard(wisdom: data.wisdomOfTheDay),
+              // BlocBuilder<HomeCubit, HomeState>(
+              //   builder: (context, state) {
+              //     return HikmahCard(hikmah: state.hikmah!);
+              //   },
+              // ),
+              BlocStateBuilderWidget<HomeCubit, HomeState, HikmahEntity>(
+                stateSelector: (state) => state.hikmahState,
+                dataSelector: (state) => state.hikmah!,
+                loadingBuilder: (context) => const CircularProgressWidget(),
+                loadedBuilder: (context, state, hikmah) =>
+                    HikmahCard(hikmah: hikmah),
+                errorMessageSelector: (state) => state.hikmahErrorMessage,
+                buildWhen: (previous, current) =>
+                    previous.hikmahState != current.hikmahState,
+              ),
               const SizedBox(height: 20),
 
               // Foreign Studies Section (الدراسات الأجنبية)

@@ -2,13 +2,13 @@ import 'package:nahj_balagha_flutter/core/network/result.dart';
 import 'package:nahj_balagha_flutter/core/usecase/base_usecase.dart';
 import 'package:nahj_balagha_flutter/features/home/domain/repository/base_home_repository.dart';
 
-class GetHomeDataUseCase implements BaseUseCase<Result, NoParameter> {
+class GetHikmahDataUseCase implements BaseUseCase<Result, NoParameter> {
   final BaseHomeRepository baseHomeRepository;
 
-  GetHomeDataUseCase({required this.baseHomeRepository});
+  GetHikmahDataUseCase({required this.baseHomeRepository});
 
   @override
   Future<Result> call({NoParameter? params}) {
-    return baseHomeRepository.getHomeData();
+    return baseHomeRepository.getHikmahToday();
   }
 }

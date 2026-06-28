@@ -3,39 +3,53 @@ import 'package:nahj_balagha_flutter/core/network/error_message_model.dart';
 import 'package:nahj_balagha_flutter/core/network/result.dart';
 import 'package:nahj_balagha_flutter/core/usecase/base_usecase.dart';
 import 'package:nahj_balagha_flutter/core/utils/enums.dart';
-import 'package:nahj_balagha_flutter/features/home/domain/usecases/get_home_data_usecase.dart';
+import 'package:nahj_balagha_flutter/features/home/domain/entities/hikmah_entity.dart';
+import 'package:nahj_balagha_flutter/features/home/domain/usecases/get_hikmah_data_usecase.dart';
 import 'package:nahj_balagha_flutter/features/home/presentation/controller/home_state.dart';
 import 'package:nahj_balagha_flutter/features/scholars/domain/entities/scholar_entity.dart';
 import 'package:nahj_balagha_flutter/features/scholars/domain/usecases/get_scholars_usecase.dart';
 
 class HomeCubit extends Cubit<HomeState> {
-  final GetHomeDataUseCase getHomeDataUseCase;
+  final GetHikmahDataUseCase _getHikmahDataUseCase;
   final GetScholarsUseCase _getScholarsUseCase;
 
   List<ScholarEntity> _scholars = [];
+  HikmahEntity? _hikmah;
 
   HomeCubit({
-    required this.getHomeDataUseCase,
+    required GetHikmahDataUseCase getHikmahDataUseCase,
     required GetScholarsUseCase getScholarsUseCase,
-  }) : _getScholarsUseCase = getScholarsUseCase,
+  }) : _getHikmahDataUseCase = getHikmahDataUseCase,
+       _getScholarsUseCase = getScholarsUseCase,
        super(const HomeState());
 
   Future<void> loadHomeData() async {
-    await fetchScholars();
-    emit(state.copyWith(requestState: RequestState.loading));
-    final result = await getHomeDataUseCase.call();
-    if (result.response != null) {
+    await Future.wait([fetchScholars(), fetchHikmahToday()]);
+  }
+
+  Future<void> fetchHikmahToday() async {
+    if (isClosed) return;
+
+    emit(state.copyWith(hikmahState: RequestState.loading));
+    // Return cached categories if available
+    if (_hikmah != null) {
+      emit(state.copyWith(hikmahState: RequestState.loaded, hikmah: _hikmah));
+      return;
+    }
+
+    final Result result = await _getHikmahDataUseCase();
+
+    if (result.response == null || isClosed) return;
+
+    if (result is Success) {
+      _hikmah = result.response;
+      emit(state.copyWith(hikmahState: RequestState.loaded, hikmah: _hikmah));
+    } else if (result is Failure) {
+      ErrorMessageModel errorMessage = result.response;
       emit(
         state.copyWith(
-          requestState: RequestState.loaded,
-          homeData: result.response,
-        ),
-      );
-    } else {
-      emit(
-        state.copyWith(
-          requestState: RequestState.error,
-          errorMessage: 'Failed to load home data',
+          hikmahState: RequestState.error,
+          hikmahErrorMessage: errorMessage.message,
         ),
       );
     }

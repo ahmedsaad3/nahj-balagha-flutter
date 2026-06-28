@@ -4,21 +4,21 @@ import 'package:nahj_balagha_flutter/core/utils/constant.dart';
 import 'package:nahj_balagha_flutter/core/utils/images.dart';
 import 'package:nahj_balagha_flutter/core/utils/theme/app_color/app_colors_light.dart';
 import 'package:nahj_balagha_flutter/core/utils/ui_utils.dart';
-import 'package:nahj_balagha_flutter/features/home/domain/entities/wisdom_entity.dart';
+import 'package:nahj_balagha_flutter/features/home/domain/entities/hikmah_entity.dart';
 import 'package:nahj_balagha_flutter/shared/components/app_image_widget.dart';
 import 'package:nahj_balagha_flutter/shared/components/soft_divider_widget.dart.dart';
 import 'package:nahj_balagha_flutter/shared/components/text_widget.dart';
 
-class WisdomCard extends StatefulWidget {
-  final WisdomEntity wisdom;
+class HikmahCard extends StatefulWidget {
+  final HikmahEntity hikmah;
 
-  const WisdomCard({super.key, required this.wisdom});
+  const HikmahCard({super.key, required this.hikmah});
 
   @override
-  State<WisdomCard> createState() => _WisdomCardState();
+  State<HikmahCard> createState() => _HikmahCardState();
 }
 
-class _WisdomCardState extends State<WisdomCard> {
+class _HikmahCardState extends State<HikmahCard> {
   bool _isExpanded = false;
 
   void _showShareOptions(BuildContext context) {
@@ -49,10 +49,10 @@ class _WisdomCardState extends State<WisdomCard> {
                 ),
                 onTap: () {
                   Navigator.pop(context);
-                  _copyToClipboard(context, widget.wisdom.text);
+                  _copyToClipboard(context, widget.hikmah.text);
                 },
               ),
-              if (widget.wisdom.benefit != null)
+              if (widget.hikmah.benefit != null)
                 ListTile(
                   leading: const Icon(
                     Icons.copy,
@@ -66,12 +66,12 @@ class _WisdomCardState extends State<WisdomCard> {
                     Navigator.pop(context);
                     _copyToClipboard(
                       context,
-                      "${widget.wisdom.text}\n\nالفائدة:\n${widget.wisdom.benefit}",
+                      "${widget.hikmah.text}\n\nالفائدة:\n${widget.hikmah.benefit}",
                     );
                   },
                 ),
-              if (widget.wisdom.benefit != null &&
-                  widget.wisdom.difficultWords != null)
+              if (widget.hikmah.benefit != null &&
+                  widget.hikmah.gharib != null)
                 ListTile(
                   leading: const Icon(
                     Icons.copy,
@@ -85,7 +85,7 @@ class _WisdomCardState extends State<WisdomCard> {
                     Navigator.pop(context);
                     _copyToClipboard(
                       context,
-                      "${widget.wisdom.text}\n\nالفائدة:\n${widget.wisdom.benefit}\n\nغريب اللغة:\n${widget.wisdom.difficultWords}",
+                      "${widget.hikmah.text}\n\nالفائدة:\n${widget.hikmah.benefit}\n\nغريب اللغة:\n${widget.hikmah.gharib}",
                     );
                   },
                 ),
@@ -121,7 +121,7 @@ class _WisdomCardState extends State<WisdomCard> {
 
           // Wisdom Text
           TextWidget(
-            title: widget.wisdom.text,
+            title: widget.hikmah.text,
             fontSize: 14,
             height: 1.8,
             color: AppColorsLight.textPrimary,
@@ -130,13 +130,13 @@ class _WisdomCardState extends State<WisdomCard> {
           ),
           const SizedBox(height: 12),
 
-          // Source
-          TextWidget(
-            title: widget.wisdom.source,
-            fontSize: 11,
-            color: AppColorsLight.gray,
-          ),
-          const SizedBox(height: 10),
+          // // Source
+          // TextWidget(
+          //   title: widget.wisdom.source,
+          //   fontSize: 11,
+          //   color: AppColorsLight.gray,
+          // ),
+          // const SizedBox(height: 10),
 
           // Expand / Share Actions
           Row(
@@ -179,7 +179,7 @@ class _WisdomCardState extends State<WisdomCard> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SoftDividerWidget(margin: EdgeInsets.only(bottom: 10)),
-                if (widget.wisdom.benefit != null) ...[
+                if (widget.hikmah.benefit != null) ...[
                   const TextWidget(
                     title: "الفائدة:",
                     fontSize: 16,
@@ -188,14 +188,14 @@ class _WisdomCardState extends State<WisdomCard> {
                   ),
                   const SizedBox(height: 4),
                   TextWidget(
-                    title: widget.wisdom.benefit!,
+                    title: widget.hikmah.benefit!,
                     fontSize: 14,
                     height: 1.6,
                     color: AppColorsLight.textPrimary,
                   ),
                   const SizedBox(height: 12),
                 ],
-                if (widget.wisdom.difficultWords != null) ...[
+                if (widget.hikmah.gharib != null) ...[
                   const TextWidget(
                     title: "غريب اللغة:",
                     fontSize: 16,
@@ -204,7 +204,7 @@ class _WisdomCardState extends State<WisdomCard> {
                   ),
                   const SizedBox(height: 4),
                   TextWidget(
-                    title: widget.wisdom.difficultWords!,
+                    title: widget.hikmah.gharib!,
                     fontSize: 14,
                     height: 1.6,
                     color: AppColorsLight.textPrimary,

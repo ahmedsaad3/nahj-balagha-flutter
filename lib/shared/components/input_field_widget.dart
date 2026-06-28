@@ -117,14 +117,21 @@ class InputFieldWidget extends StatelessWidget {
           enabledBorder: focusedBorder,
           fillColor: fillColor,
 
+          // prefixIcon: AppImageWidget(
+          //   path: iconAsset,
+          //   imageType: imageType,
+          //   color: AppColorsLight.secondary,
+          //   scale: 0.5,
+          // ),
           prefixIcon: iconAsset != null || icon != null
               ? Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: AppImageWidget(
+                    icon: icon,
                     path: iconAsset,
                     imageType: imageType,
-                    color: AppColorsLight.accent,
-                    scale: 0.7,
+                    color: AppColorsLight.secondary,
+                    scale: 0.5,
                   ),
                 )
               : null,

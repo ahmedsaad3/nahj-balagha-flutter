@@ -8,8 +8,15 @@ class ApiNetwork {
   static const String UPDATE_PROFILE_ENDPOINT = '/login';
 
   // Scholars
-  static const String GET_SCHOLARS = '$BASE_API_NAHJ_BALAGHA/Person';
-  static const String GET_SCHOLARS_TYPE = '$BASE_API_NAHJ_BALAGHA/PersonType';
+  static const String GET_SCHOLARS = '$BASE_API_NAHJ_BALAGHA/person';
+  static const String GET_SCHOLARS_TYPE = '$BASE_API_NAHJ_BALAGHA/personType';
+
+  // Home
+  static const String GET_HIKMAH_TODAY_ENDPOINT =
+      '$BASE_API_NAHJ_BALAGHA/hikmah/today';
+
+  // Books
+  static const String GET_BOOKS_ENDPOINT = '$BASE_API_NAHJ_BALAGHA/book';
 
   // Notifications
   static const String NOTIFICATIONS_ENDPOINT =
