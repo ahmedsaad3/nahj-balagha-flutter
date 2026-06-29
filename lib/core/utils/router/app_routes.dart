@@ -4,6 +4,7 @@ import 'package:nahj_balagha_flutter/features/auth/presentation/screens/signin_s
 import 'package:nahj_balagha_flutter/features/auth/presentation/screens/signup_screen.dart';
 import 'package:nahj_balagha_flutter/features/auth/presentation/screens/onboarding_screen.dart';
 import 'package:nahj_balagha_flutter/features/books/domain/entities/book_entity.dart';
+import 'package:nahj_balagha_flutter/features/books/presentation/screens/books_screen.dart';
 import 'package:nahj_balagha_flutter/features/browse/presentation/screens/browse_screen.dart';
 import 'package:nahj_balagha_flutter/features/favorites/presentation/screens/favorite_screen.dart';
 import 'package:nahj_balagha_flutter/features/home/presentation/screens/home_screen.dart';
@@ -48,11 +49,14 @@ class AppRoutes {
 
   // todo: Home
   static const String homeScreen = "home_screen";
-  static const String bookDetailsScreen = "book_details_screen";
 
   // todo: Scholars
   static const String scholarDetailsScreen = "scholar_details_screen";
   static const String scholarsScreen = "scholars_screen";
+
+  // todo: Books
+  static const String booksScreen = "books_screen";
+  static const String bookDetailsScreen = "book_details_screen";
 
   // todo: Search
   static const String searchScreen = "search_screen";
@@ -82,6 +86,9 @@ class AppRoutes {
         return MaterialPageRoute(
           builder: (_) => ScholarDetailsScreen(scholar: scholar),
         );
+
+      case booksScreen:
+        return MaterialPageRoute(builder: (_) => const BooksScreen());
 
       case bookDetailsScreen:
         final book = settings.arguments as BookEntity;

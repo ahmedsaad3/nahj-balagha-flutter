@@ -6,6 +6,8 @@ import 'package:nahj_balagha_flutter/core/utils/enums.dart';
 import 'package:nahj_balagha_flutter/core/utils/router/app_routes.dart';
 import 'package:nahj_balagha_flutter/core/utils/theme/app_color/app_colors_light.dart';
 import 'package:nahj_balagha_flutter/extensions/responsive_extensions.dart';
+import 'package:nahj_balagha_flutter/features/books/domain/entities/book_entity.dart';
+import 'package:nahj_balagha_flutter/features/books/presentation/components/book_item_card.dart';
 import 'package:nahj_balagha_flutter/features/home/domain/entities/hikmah_entity.dart';
 import 'package:nahj_balagha_flutter/features/home/presentation/components/hikmah_card.dart';
 import 'package:nahj_balagha_flutter/features/scholars/domain/entities/scholar_entity.dart';
@@ -21,13 +23,9 @@ import 'package:nahj_balagha_flutter/shared/components/section_header.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
-  // void _navigateToBookDetails(BookEntity book) {
-  //   Navigator.pushNamed(context, AppRoutes.bookDetailsScreen, arguments: book);
-  // }
-
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
+    return BlocProvider<HomeCubit>(
       create: (context) => sl<HomeCubit>()..loadHomeData(),
       child: Scaffold(
         body: SingleChildScrollView(
@@ -47,12 +45,6 @@ class HomeScreen extends StatelessWidget {
               ),
               const SizedBox(height: 16),
 
-              // Wisdom of the Day Card
-              // BlocBuilder<HomeCubit, HomeState>(
-              //   builder: (context, state) {
-              //     return HikmahCard(hikmah: state.hikmah!);
-              //   },
-              // ),
               BlocStateBuilderWidget<HomeCubit, HomeState, HikmahEntity>(
                 stateSelector: (state) => state.hikmahState,
                 dataSelector: (state) => state.hikmah!,
@@ -65,58 +57,52 @@ class HomeScreen extends StatelessWidget {
               ),
               const SizedBox(height: 20),
 
-              // Foreign Studies Section (الدراسات الأجنبية)
-              SectionHeader(
-                title: "الدراسات الأجنبية",
-                fontSize: 14,
-                titleColor: AppColorsLight.textPrimary,
-                actionText: "المزيد",
-                onActionTap: () {},
-              ),
-              const SizedBox(height: 10),
-
-              // SizedBox(
-              //   height: 180,
-              //   child: ListView.builder(
-              //     scrollDirection: Axis.horizontal,
-              //     itemCount: data.foreignStudies.length,
-              //     itemBuilder: (context, index) {
-              //       return BookItemCard(
-              //         book: data.foreignStudies[index],
-              //         onTap: () =>
-              //             _navigateToBookDetails(data.foreignStudies[index]),
-              //       );
-              //     },
-              //   ),
-              // ),
-              const SizedBox(height: 20),
-
               // Articles Section (المقالات)
               SectionHeader(
-                title: "المقالات",
+                title: "الكتب",
                 fontSize: 14,
                 titleColor: AppColorsLight.textPrimary,
                 actionText: "المزيد",
-                onActionTap: () {},
+                onActionTap: () {
+                  Navigator.pushNamed(context, AppRoutes.booksScreen);
+                },
               ),
               const SizedBox(height: 10),
+              BlocStateBuilderWidget<HomeCubit, HomeState, List<BookEntity>>(
+                stateSelector: (state) => state.booksState,
+                dataSelector: (state) => state.books,
+                loadingBuilder: (context) => const CircularProgressWidget(),
+                loadedBuilder: (context, state, books) => SizedBox(
+                  height: 120,
+                  child: OverflowBox(
+                    maxWidth: context.dimensions.screenWidth - 10,
+                    child: CollectionViewWidget(
+                      layout: CollectionLayout.list,
+                      horizontal: 0,
+                      vertical: 0,
+                      scrollDirection: Axis.horizontal,
+                      itemCount: state.books.length,
+                      itemBuilder: (context, index) => BookItemCard(
+                        book: state.books[index],
+                        onTap: () => {
+                          Navigator.pushNamed(
+                            context,
+                            AppRoutes.bookDetailsScreen,
+                            arguments: state.books[index],
+                          ),
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+                errorMessageSelector: (state) => state.scholarErrorMessage,
+                buildWhen: (previous, current) =>
+                    previous.scholarsState != current.scholarsState,
+              ),
 
-              // SizedBox(
-              //   height: 180,
-              //   child: ListView.builder(
-              //     scrollDirection: Axis.horizontal,
-              //     itemCount: data.articles.length,
-              //     itemBuilder: (context, index) {
-              //       return BookItemCard(
-              //         book: data.articles[index],
-              //         onTap: () => _navigateToBookDetails(data.articles[index]),
-              //       );
-              //     },
-              //   ),
-              // ),
               const SizedBox(height: 20),
 
-              // Scholar Commentators (أعلام الشارحين)
+              // Scholar Commentators
               SectionHeader(
                 title: "أعلام الشارحين",
                 fontSize: 14,

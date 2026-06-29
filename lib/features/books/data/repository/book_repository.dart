@@ -1,6 +1,6 @@
 import 'package:nahj_balagha_flutter/core/network/result.dart';
+import 'package:nahj_balagha_flutter/core/usecase/base_usecase.dart';
 import 'package:nahj_balagha_flutter/features/books/data/datasource/base_book_remote_data_source.dart';
-import 'package:nahj_balagha_flutter/features/books/domain/entities/book_entity.dart';
 import 'package:nahj_balagha_flutter/features/books/domain/repository/base_book_repository.dart';
 
 class BookRepository implements BaseBookRepository {
@@ -9,12 +9,7 @@ class BookRepository implements BaseBookRepository {
   BookRepository({required this.baseBookRemoteDataSource});
 
   @override
-  Future<Result<List<BookEntity>>> getForeignStudies() {
-    return baseBookRemoteDataSource.getForeignStudies();
-  }
-
-  @override
-  Future<Result<List<BookEntity>>> getArticles() {
-    return baseBookRemoteDataSource.getArticles();
+  Future<Result> getBooks({required PaginationParams params}) {
+    return baseBookRemoteDataSource.getBooks(params: params);
   }
 }

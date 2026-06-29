@@ -1,74 +1,64 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nahj_balagha_flutter/core/utils/enums.dart';
-import 'package:nahj_balagha_flutter/features/books/domain/usecases/get_articles_usecases.dart';
-import 'package:nahj_balagha_flutter/features/books/domain/usecases/get_foreign_studies_usecases.dart';
+import 'package:nahj_balagha_flutter/core/usecase/base_usecase.dart';
+import 'package:nahj_balagha_flutter/features/books/domain/entities/book_entity.dart';
+import 'package:nahj_balagha_flutter/features/books/domain/usecases/get_books_usecase.dart';
 import 'package:nahj_balagha_flutter/core/network/result.dart';
 import 'package:nahj_balagha_flutter/features/books/presentation/controller/book_state.dart';
+import 'package:nahj_balagha_flutter/shared/cubit/paginated/paginated_cubit.dart';
+import 'package:nahj_balagha_flutter/shared/models/pagination.dart';
 
-class BookCubit extends Cubit<BookState> {
-  final GetForeignStudiesUseCases getForeignStudiesUseCases;
-  final GetArticlesUseCases getArticlesUseCases;
+class BookCubit extends PaginatedCubit<BookEntity, BookState> {
+  final GetBooksUseCase getBooksUseCases;
 
-  BookCubit({
-    required this.getArticlesUseCases,
-    required this.getForeignStudiesUseCases,
-  }) : super(const BookState());
+  BookCubit({required this.getBooksUseCases})
+    : super(initialState: const BookState());
 
-  Future<void> getArticles() async {
-    emit(
-      state.copyWith(
-        articlesState: RequestState.loading,
-        articlesMessage: '',
-        articles: [],
-      ),
-    );
-    final result = await getArticlesUseCases();
-    switch (result) {
-      case Success(response: final response):
-        emit(
-          state.copyWith(
-            articlesState: RequestState.loaded,
-            articles: response,
-            articlesMessage: '',
-          ),
-        );
-      case Failure():
-        emit(
-          state.copyWith(
-            articlesState: RequestState.error,
-            articlesMessage: 'حدث خطأ',
-            articles: [],
-          ),
-        );
+  Future<void> getBooks() async {
+    emitLoading();
+
+    final params = PaginationParams(pageNumber: 1, pageSize: pageSize);
+    final result = await getBooksUseCases(params: params);
+
+    if (result is Success) {
+      final pagination = result.response as Pagination<BookEntity>;
+      emitLoaded(pagination.data, pagination);
+      return;
+    }
+
+    if (result is Failure) {
+      emitError(result.response);
+      return;
     }
   }
 
-  Future<void> getForeignStudies() async {
-    emit(
-      state.copyWith(
-        foreignStudiesState: RequestState.loading,
-        foreignStudiesMessage: '',
-        foreignStudies: [],
-      ),
-    );
-    final result = await getForeignStudiesUseCases();
-    switch (result) {
-      case Success(response: final response):
-        emit(
-          state.copyWith(
-            foreignStudiesState: RequestState.loaded,
-            foreignStudies: response,
-            foreignStudiesMessage: '',
-          ),
-        );
-      case Failure():
-        emit(
-          state.copyWith(
-            foreignStudiesState: RequestState.error,
-            foreignStudiesMessage: 'حدث خطأ',
-            foreignStudies: [],
-          ),
-        );
+  @override
+  Future<void> loadMore() async {
+    if (!shouldLoadMore()) {
+      return;
+    }
+
+    emitLoadingMore();
+
+    final nextPage = state.currentPage + 1;
+    final params = PaginationParams(pageNumber: nextPage, pageSize: pageSize);
+
+    final result = await getBooksUseCases(params: params);
+
+    if (result is Success) {
+      final pagination = result.response as Pagination<BookEntity>;
+      appendData(pagination.data, pagination);
+      return;
+    }
+
+    if (result is Failure) {
+      resetLoadingMore();
+      emit(
+        state.copyWith(
+          isLoadingMore: false,
+          hasMorePages: false,
+          message: result.response,
+        ),
+      );
+      return;
     }
   }
 }

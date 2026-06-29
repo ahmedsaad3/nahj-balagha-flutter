@@ -51,8 +51,7 @@ import 'package:nahj_balagha_flutter/features/books/data/datasource/base_book_re
 import 'package:nahj_balagha_flutter/features/books/data/datasource/book_remote_data_source.dart';
 import 'package:nahj_balagha_flutter/features/books/data/repository/book_repository.dart';
 import 'package:nahj_balagha_flutter/features/books/domain/repository/base_book_repository.dart';
-import 'package:nahj_balagha_flutter/features/books/domain/usecases/get_articles_usecases.dart';
-import 'package:nahj_balagha_flutter/features/books/domain/usecases/get_foreign_studies_usecases.dart';
+import 'package:nahj_balagha_flutter/features/books/domain/usecases/get_books_usecase.dart';
 import 'package:nahj_balagha_flutter/features/books/presentation/controller/book_cubit.dart';
 
 import 'package:nahj_balagha_flutter/features/scholars/data/datasource/base_scholar_remote_data_source.dart';
@@ -244,11 +243,8 @@ class ServicesLocator {
     );
 
     // Book Use Cases
-    sl.registerLazySingleton<GetArticlesUseCases>(
-      () => GetArticlesUseCases(baseBookRepository: sl()),
-    );
-    sl.registerLazySingleton<GetForeignStudiesUseCases>(
-      () => GetForeignStudiesUseCases(baseBookRepository: sl()),
+    sl.registerLazySingleton<GetBooksUseCase>(
+      () => GetBooksUseCase(baseBookRepository: sl()),
     );
 
     // Scholar Use Case
@@ -318,14 +314,15 @@ class ServicesLocator {
 
     // Home Cubit
     sl.registerFactory<HomeCubit>(
-      () => HomeCubit(getHikmahDataUseCase: sl(), getScholarsUseCase: sl()),
+      () => HomeCubit(
+        getHikmahDataUseCase: sl(),
+        getScholarsUseCase: sl(),
+        getBooksUseCase: sl(),
+      ),
     );
 
     // Book Cubit
-    sl.registerFactory<BookCubit>(
-      () =>
-          BookCubit(getArticlesUseCases: sl(), getForeignStudiesUseCases: sl()),
-    );
+    sl.registerFactory<BookCubit>(() => BookCubit(getBooksUseCases: sl()));
 
     // Scholar Cubit
     sl.registerFactory<ScholarCubit>(

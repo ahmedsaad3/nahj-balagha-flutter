@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:nahj_balagha_flutter/core/utils/enums.dart';
 import 'package:nahj_balagha_flutter/features/home/domain/entities/hikmah_entity.dart';
 import 'package:nahj_balagha_flutter/features/scholars/domain/entities/scholar_entity.dart';
+import 'package:nahj_balagha_flutter/features/books/domain/entities/book_entity.dart';
 
 class HomeState extends Equatable {
   final RequestState hikmahState;
@@ -12,6 +13,10 @@ class HomeState extends Equatable {
   final List<ScholarEntity> scholars;
   final String scholarErrorMessage;
 
+  final RequestState booksState;
+  final List<BookEntity> books;
+  final String bookErrorMessage;
+
   const HomeState({
     this.hikmahState = RequestState.idle,
     this.hikmah,
@@ -19,6 +24,9 @@ class HomeState extends Equatable {
     this.scholarsState = RequestState.idle,
     this.scholars = const [],
     this.scholarErrorMessage = '',
+    this.booksState = RequestState.idle,
+    this.books = const [],
+    this.bookErrorMessage = '',
   });
 
   HomeState copyWith({
@@ -28,6 +36,9 @@ class HomeState extends Equatable {
     RequestState? scholarsState,
     List<ScholarEntity>? scholars,
     String? scholarErrorMessage,
+    RequestState? booksState,
+    List<BookEntity>? books,
+    String? bookErrorMessage,
   }) {
     return HomeState(
       hikmahState: hikmahState ?? this.hikmahState,
@@ -36,6 +47,9 @@ class HomeState extends Equatable {
       scholarsState: scholarsState ?? this.scholarsState,
       scholars: scholars ?? this.scholars,
       scholarErrorMessage: scholarErrorMessage ?? this.scholarErrorMessage,
+      booksState: booksState ?? this.booksState,
+      books: books ?? this.books,
+      bookErrorMessage: bookErrorMessage ?? this.bookErrorMessage,
     );
   }
 
@@ -47,5 +61,8 @@ class HomeState extends Equatable {
     scholarsState,
     scholars,
     scholarErrorMessage,
+    booksState,
+    books,
+    bookErrorMessage,
   ];
 }

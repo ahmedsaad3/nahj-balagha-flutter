@@ -3,6 +3,8 @@ import 'package:nahj_balagha_flutter/core/network/error_message_model.dart';
 import 'package:nahj_balagha_flutter/core/network/result.dart';
 import 'package:nahj_balagha_flutter/core/usecase/base_usecase.dart';
 import 'package:nahj_balagha_flutter/core/utils/enums.dart';
+import 'package:nahj_balagha_flutter/features/books/domain/entities/book_entity.dart';
+import 'package:nahj_balagha_flutter/features/books/domain/usecases/get_books_usecase.dart';
 import 'package:nahj_balagha_flutter/features/home/domain/entities/hikmah_entity.dart';
 import 'package:nahj_balagha_flutter/features/home/domain/usecases/get_hikmah_data_usecase.dart';
 import 'package:nahj_balagha_flutter/features/home/presentation/controller/home_state.dart';
@@ -12,19 +14,23 @@ import 'package:nahj_balagha_flutter/features/scholars/domain/usecases/get_schol
 class HomeCubit extends Cubit<HomeState> {
   final GetHikmahDataUseCase _getHikmahDataUseCase;
   final GetScholarsUseCase _getScholarsUseCase;
+  final GetBooksUseCase _getBooksUseCase;
 
   List<ScholarEntity> _scholars = [];
   HikmahEntity? _hikmah;
+  List<BookEntity> _books = [];
 
   HomeCubit({
     required GetHikmahDataUseCase getHikmahDataUseCase,
     required GetScholarsUseCase getScholarsUseCase,
+    required GetBooksUseCase getBooksUseCase,
   }) : _getHikmahDataUseCase = getHikmahDataUseCase,
        _getScholarsUseCase = getScholarsUseCase,
+       _getBooksUseCase = getBooksUseCase,
        super(const HomeState());
 
   Future<void> loadHomeData() async {
-    await Future.wait([fetchScholars(), fetchHikmahToday()]);
+    await Future.wait([fetchScholars(), fetchHikmahToday(), fetchBooks()]);
   }
 
   Future<void> fetchHikmahToday() async {
@@ -88,6 +94,36 @@ class HomeCubit extends Cubit<HomeState> {
         state.copyWith(
           scholarsState: RequestState.error,
           scholarErrorMessage: errorMessage.message,
+        ),
+      );
+    }
+  }
+
+  Future<void> fetchBooks() async {
+    if (isClosed) return;
+
+    emit(state.copyWith(booksState: RequestState.loading));
+
+    if (_books.isNotEmpty) {
+      emit(state.copyWith(booksState: RequestState.loaded, books: _books));
+      return;
+    }
+
+    final Result result = await _getBooksUseCase(
+      params: PaginationParams(pageNumber: 1, pageSize: 8),
+    );
+
+    if (result.response == null || isClosed) return;
+
+    if (result is Success) {
+      _books = result.response.data;
+      emit(state.copyWith(booksState: RequestState.loaded, books: _books));
+    } else if (result is Failure) {
+      ErrorMessageModel errorMessage = result.response;
+      emit(
+        state.copyWith(
+          booksState: RequestState.error,
+          bookErrorMessage: errorMessage.message,
         ),
       );
     }

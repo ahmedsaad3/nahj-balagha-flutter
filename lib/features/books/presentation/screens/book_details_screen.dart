@@ -39,32 +39,41 @@ class BookDetailsScreen extends StatelessWidget {
                 ),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(RADIUS),
-                  child: book.coverImage.startsWith('http')
-                      ? Image.network(
-                          book.coverImage,
-                          fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) =>
-                              Container(
-                                color: AppColorsLight.grayLight,
-                                child: const Icon(
-                                  Icons.book,
-                                  color: AppColorsLight.primary,
-                                  size: 80,
-                                ),
-                              ),
-                        )
-                      : Image.asset(
-                          book.coverImage,
-                          fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) =>
-                              Container(
-                                color: AppColorsLight.grayLight,
-                                child: const Icon(
-                                  Icons.book,
-                                  color: AppColorsLight.primary,
-                                  size: 80,
-                                ),
-                              ),
+                  child: book.coverImage != null
+                      ? (book.coverImage!.startsWith('http')
+                          ? Image.network(
+                              book.coverImage!,
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) =>
+                                  Container(
+                                    color: AppColorsLight.grayLight,
+                                    child: const Icon(
+                                      Icons.book,
+                                      color: AppColorsLight.primary,
+                                      size: 80,
+                                    ),
+                                  ),
+                            )
+                          : Image.network(
+                              'http://31.220.82.155:8088${book.coverImage}',
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) =>
+                                  Container(
+                                    color: AppColorsLight.grayLight,
+                                    child: const Icon(
+                                      Icons.book,
+                                      color: AppColorsLight.primary,
+                                      size: 80,
+                                    ),
+                                  ),
+                            ))
+                      : Container(
+                          color: AppColorsLight.grayLight,
+                          child: const Icon(
+                            Icons.book,
+                            color: AppColorsLight.primary,
+                            size: 80,
+                          ),
                         ),
                 ),
               ),
@@ -84,7 +93,7 @@ class BookDetailsScreen extends StatelessWidget {
 
             // Author
             TextWidget(
-              title: book.author,
+              title: book.scholarName ?? 'غير معروف',
               fontSize: 16,
               alignment: TextAlign.center,
             ),
@@ -102,7 +111,7 @@ class BookDetailsScreen extends StatelessWidget {
 
             // Description Text
             TextWidget(
-              title: book.description,
+              title: book.description ?? 'لا توجد تفاصيل متاحة.',
               fontSize: 16,
               height: 1.8,
               color: AppColorsLight.textPrimary,

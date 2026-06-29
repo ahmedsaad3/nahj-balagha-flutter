@@ -1,7 +1,5 @@
 import 'package:nahj_balagha_flutter/core/network/result.dart';
-import 'package:nahj_balagha_flutter/features/books/data/model/book.dart';
-
+import 'package:nahj_balagha_flutter/core/usecase/base_usecase.dart';
 abstract class BaseBookRemoteDataSource {
-  Future<Result<List<BookModel>>> getForeignStudies();
-  Future<Result<List<BookModel>>> getArticles();
+  Future<Result> getBooks({required PaginationParams params});
 }

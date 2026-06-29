@@ -4,18 +4,38 @@ class BookModel extends BookEntity {
   const BookModel({
     required super.id,
     required super.title,
-    required super.author,
-    required super.coverImage,
-    required super.description,
+    super.description,
+    super.scholarId,
+    super.scholarName,
+    super.bookTypeId,
+    super.bookTypeName,
+    super.publishingYear,
+    super.publisher,
+    super.publishPlace,
+    super.pageCounts,
+    super.coverImage,
+    super.pdfFile,
+    super.createdAt,
+    super.updatedAt,
   });
 
   factory BookModel.fromJson(Map<String, dynamic> json) {
     return BookModel(
       id: json['id'] as String,
       title: json['title'] as String,
-      author: json['author'] as String,
-      coverImage: json['coverImage'] as String,
-      description: json['description'] as String,
+      description: json['description'] as String?,
+      scholarId: json['scholarId'] as String?,
+      scholarName: json['scholarName'] as String?,
+      bookTypeId: json['bookTypeId'] as String?,
+      bookTypeName: json['bookTypeName'] as String?,
+      publishingYear: json['publishingYear'] as int?,
+      publisher: json['publisher'] as String?,
+      publishPlace: json['publishPlace'] as String?,
+      pageCounts: json['pageCounts'] as int?,
+      coverImage: json['coverImage'] as String?,
+      pdfFile: json['pdfFile'] as String?,
+      createdAt: json['createdAt'] as String?,
+      updatedAt: json['updatedAt'] as String?,
     );
   }
 }
