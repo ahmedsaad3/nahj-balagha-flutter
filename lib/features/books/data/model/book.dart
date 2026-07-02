@@ -15,8 +15,6 @@ class BookModel extends BookEntity {
     super.pageCounts,
     super.coverImage,
     super.pdfFile,
-    super.createdAt,
-    super.updatedAt,
   });
 
   factory BookModel.fromJson(Map<String, dynamic> json) {
@@ -34,8 +32,6 @@ class BookModel extends BookEntity {
       pageCounts: json['pageCounts'] as int?,
       coverImage: json['coverImage'] as String?,
       pdfFile: json['pdfFile'] as String?,
-      createdAt: json['createdAt'] as String?,
-      updatedAt: json['updatedAt'] as String?,
     );
   }
 }

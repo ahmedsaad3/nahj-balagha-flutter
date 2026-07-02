@@ -6,13 +6,13 @@ import 'package:nahj_balagha_flutter/core/utils/enums.dart';
 import 'package:nahj_balagha_flutter/features/books/domain/entities/book_entity.dart';
 import 'package:nahj_balagha_flutter/features/books/domain/usecases/get_books_usecase.dart';
 import 'package:nahj_balagha_flutter/features/home/domain/entities/hikmah_entity.dart';
-import 'package:nahj_balagha_flutter/features/home/domain/usecases/get_hikmah_data_usecase.dart';
+import 'package:nahj_balagha_flutter/features/home/domain/usecases/get_hikmah_today_usecase.dart';
 import 'package:nahj_balagha_flutter/features/home/presentation/controller/home_state.dart';
 import 'package:nahj_balagha_flutter/features/scholars/domain/entities/scholar_entity.dart';
 import 'package:nahj_balagha_flutter/features/scholars/domain/usecases/get_scholars_usecase.dart';
 
 class HomeCubit extends Cubit<HomeState> {
-  final GetHikmahDataUseCase _getHikmahDataUseCase;
+  final GetHikmahTodayUseCase _getHikmahDataUseCase;
   final GetScholarsUseCase _getScholarsUseCase;
   final GetBooksUseCase _getBooksUseCase;
 
@@ -21,7 +21,7 @@ class HomeCubit extends Cubit<HomeState> {
   List<BookEntity> _books = [];
 
   HomeCubit({
-    required GetHikmahDataUseCase getHikmahDataUseCase,
+    required GetHikmahTodayUseCase getHikmahDataUseCase,
     required GetScholarsUseCase getScholarsUseCase,
     required GetBooksUseCase getBooksUseCase,
   }) : _getHikmahDataUseCase = getHikmahDataUseCase,

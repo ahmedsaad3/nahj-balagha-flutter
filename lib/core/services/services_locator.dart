@@ -15,7 +15,7 @@ import 'package:nahj_balagha_flutter/features/auth/presentation/controller/signi
 import 'package:nahj_balagha_flutter/features/auth/presentation/controller/signup_cubit/signup_cubit.dart';
 import 'package:nahj_balagha_flutter/features/auth/presentation/controller/update_profile_cubit/update_profile_cubit.dart';
 import 'package:nahj_balagha_flutter/features/home/data/repository/home_repository.dart';
-import 'package:nahj_balagha_flutter/features/home/domain/usecases/get_hikmah_data_usecase.dart';
+import 'package:nahj_balagha_flutter/features/home/domain/usecases/get_hikmah_today_usecase.dart';
 import 'package:nahj_balagha_flutter/features/notifications/data/datasource/base_notifications_remote_data_source.dart';
 import 'package:nahj_balagha_flutter/features/notifications/data/datasource/notifications_remote_data_source.dart';
 import 'package:nahj_balagha_flutter/features/notifications/data/repository/notifications_repository.dart';
@@ -238,8 +238,8 @@ class ServicesLocator {
     );
 
     // Home Use Case
-    sl.registerLazySingleton<GetHikmahDataUseCase>(
-      () => GetHikmahDataUseCase(baseHomeRepository: sl()),
+    sl.registerLazySingleton<GetHikmahTodayUseCase>(
+      () => GetHikmahTodayUseCase(baseHomeRepository: sl()),
     );
 
     // Book Use Cases
